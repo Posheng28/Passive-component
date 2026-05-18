@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>被動元件教學 | Passive Components</title>
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<header class="site-header">
+  <div class="header-inner">
+    <div class="logo">
+      <span class="logo-icon">⚡</span>
+      <span class="logo-text">被動元件教學</span>
+    </div>
+    <div class="header-right">
+      <div class="search-wrap">
+        <input type="text" id="searchInput" placeholder="搜尋內容..." autocomplete="off" />
+        <button id="searchBtn" aria-label="搜尋">🔍</button>
+      </div>
+      <button class="menu-toggle" id="menuToggle" aria-label="開啟選單">☰</button>
+    </div>
+  </div>
+  <div id="searchResults" class="search-results hidden"></div>
+</header>
+
+<!-- ===== LAYOUT ===== -->
+<div class="layout">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <nav class="toc">
+      <p class="toc-title">目錄</p>
+      <ul id="tocList">
+        <li><a href="#intro" class="toc-link active">📖 課程介紹</a></li>
+        <li>
+          <a href="#ch1" class="toc-link">📌 第一章：電阻</a>
+          <ul>
+            <li><a href="#ch1-1" class="toc-link sub">1-1 基本原理</a></li>
+            <li><a href="#ch1-2" class="toc-link sub">1-2 色碼辨識</a></li>
+            <li><a href="#ch1-3" class="toc-link sub">1-3 應用電路</a></li>
+          </ul>
+        </li>
+        <li>
+          <a href="#ch2" class="toc-link">📌 第二章：電容</a>
+          <ul>
+            <li><a href="#ch2-1" class="toc-link sub">2-1 基本原理</a></li>
+            <li><a href="#ch2-2" class="toc-link sub">2-2 種類與規格</a></li>
+            <li><a href="#ch2-3" class="toc-link sub">2-3 充放電特性</a></li>
+          </ul>
+        </li>
+        <li>
+          <a href="#ch3" class="toc-link">📌 第三章：電感</a>
+          <ul>
+            <li><a href="#ch3-1" class="toc-link sub">3-1 基本原理</a></li>
+            <li><a href="#ch3-2" class="toc-link sub">3-2 種類與應用</a></li>
+          </ul>
+        </li>
+        <li><a href="#quiz" class="toc-link">🧪 章節測驗</a></li>
+        <li><a href="#resources" class="toc-link">📂 學習資源</a></li>
+      </ul>
+    </nav>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main class="main-content" id="mainContent">
+
+    <!-- HERO -->
+    <section class="hero" id="intro">
+      <div class="hero-badge">電子學入門</div>
+      <h1>被動元件<br><span class="highlight">完整教學指南</span></h1>
+      <p class="hero-sub">從基礎原理到實際應用，系統性學習電阻、電容、電感</p>
+      <div class="hero-chips">
+        <span class="chip chip-r">⚙️ 電阻</span>
+        <span class="chip chip-c">🔋 電容</span>
+        <span class="chip chip-l">🌀 電感</span>
+      </div>
+      <div class="progress-bar-wrap">
+        <div class="progress-label">學習進度</div>
+        <div class="progress-track"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+        <div class="progress-pct" id="progressPct">0%</div>
+      </div>
+    </section>
+
+    <!-- ===== CH1 電阻 ===== -->
+    <section class="chapter" id="ch1" data-keywords="電阻 resistor 色碼 ohm 歐姆">
+      <div class="chapter-header ch-color-r">
+        <span class="ch-num">01</span>
+        <div>
+          <h2>電阻 Resistor</h2>
+          <p>限制電流、分壓、保護元件</p>
+        </div>
+      </div>
+
+      <div class="content-block" id="ch1-1">
+        <h3>1-1 基本原理</h3>
+        <div class="concept-card">
+          <div class="formula-box">V = I × R</div>
+          <p>歐姆定律：電壓等於電流乘以電阻。電阻的單位為歐姆（Ω）。</p>
+        </div>
+        <div class="image-placeholder" data-slot="ch1-img1">
+          <span>📷 圖片區：電阻符號與實物照片</span>
+        </div>
+      </div>
+
+      <div class="content-block" id="ch1-2">
+        <h3>1-2 色碼辨識</h3>
+        <div class="color-code-demo">
+          <div class="band" style="background:#a52a2a" title="棕=1">棕</div>
+          <div class="band" style="background:#ff0000" title="紅=2">紅</div>
+          <div class="band" style="background:#ffa500" title="橙=×100">橙</div>
+          <div class="band band-tolerance" style="background:#ffd700" title="金=±5%">金</div>
+        </div>
+        <p class="code-hint">範例：棕紅橙金 → 12 × 100 = <strong>1200 Ω ± 5%</strong></p>
+      </div>
+
+      <div class="content-block" id="ch1-3">
+        <h3>1-3 應用電路</h3>
+        <div class="pdf-viewer-wrap" data-pdf="pdfs/ch1-resistor.pdf">
+          <div class="pdf-placeholder">
+            <span>📄 PDF：電阻應用電路講義</span>
+            <button class="btn-open-pdf" onclick="openPDF('pdfs/ch1-resistor.pdf')">開啟 PDF</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== CH2 電容 ===== -->
+    <section class="chapter" id="ch2" data-keywords="電容 capacitor 充電 放電 farad 法拉">
+      <div class="chapter-header ch-color-c">
+        <span class="ch-num">02</span>
+        <div>
+          <h2>電容 Capacitor</h2>
+          <p>儲存電荷、濾波、耦合與去耦合</p>
+        </div>
+      </div>
+
+      <div class="content-block" id="ch2-1">
+        <h3>2-1 基本原理</h3>
+        <div class="concept-card">
+          <div class="formula-box">Q = C × V</div>
+          <p>電容儲存的電荷量等於電容值乘以電壓。單位為法拉（F）。</p>
+        </div>
+        <div class="image-placeholder" data-slot="ch2-img1">
+          <span>📷 圖片區：電容種類對比圖</span>
+        </div>
+      </div>
+
+      <div class="content-block" id="ch2-2">
+        <h3>2-2 種類與規格</h3>
+        <div class="card-grid">
+          <div class="info-card card-blue">
+            <div class="card-icon">🔵</div>
+            <h4>陶瓷電容</h4>
+            <p>小容量、高頻特性佳</p>
+          </div>
+          <div class="info-card card-green">
+            <div class="card-icon">🟢</div>
+            <h4>電解電容</h4>
+            <p>大容量、有極性</p>
+          </div>
+          <div class="info-card card-purple">
+            <div class="card-icon">🟣</div>
+            <h4>薄膜電容</h4>
+            <p>精度高、穩定性佳</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="content-block" id="ch2-3">
+        <h3>2-3 充放電特性</h3>
+        <div class="concept-card">
+          <div class="formula-box">τ = R × C</div>
+          <p>時間常數 τ（tau）= 電阻 × 電容。充電至 63.2% 所需時間。</p>
+        </div>
+        <div class="pdf-viewer-wrap" data-pdf="pdfs/ch2-capacitor.pdf">
+          <div class="pdf-placeholder">
+            <span>📄 PDF：電容充放電講義</span>
+            <button class="btn-open-pdf" onclick="openPDF('pdfs/ch2-capacitor.pdf')">開啟 PDF</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== CH3 電感 ===== -->
+    <section class="chapter" id="ch3" data-keywords="電感 inductor 線圈 henry 亨利 磁場">
+      <div class="chapter-header ch-color-l">
+        <span class="ch-num">03</span>
+        <div>
+          <h2>電感 Inductor</h2>
+          <p>儲存磁能、濾波、變壓器原理</p>
+        </div>
+      </div>
+
+      <div class="content-block" id="ch3-1">
+        <h3>3-1 基本原理</h3>
+        <div class="concept-card">
+          <div class="formula-box">V = L × (dI/dt)</div>
+          <p>電感電壓與電流變化率成正比。單位為亨利（H）。</p>
+        </div>
+        <div class="image-placeholder" data-slot="ch3-img1">
+          <span>📷 圖片區：電感實物照片</span>
+        </div>
+      </div>
+
+      <div class="content-block" id="ch3-2">
+        <h3>3-2 種類與應用</h3>
+        <div class="card-grid">
+          <div class="info-card card-orange">
+            <div class="card-icon">🟠</div>
+            <h4>空心線圈</h4>
+            <p>高頻應用、無鐵芯損耗</p>
+          </div>
+          <div class="info-card card-red">
+            <div class="card-icon">🔴</div>
+            <h4>鐵芯電感</h4>
+            <p>大電感量、電源濾波</p>
+          </div>
+        </div>
+        <div class="pdf-viewer-wrap" data-pdf="pdfs/ch3-inductor.pdf">
+          <div class="pdf-placeholder">
+            <span>📄 PDF：電感應用講義</span>
+            <button class="btn-open-pdf" onclick="openPDF('pdfs/ch3-inductor.pdf')">開啟 PDF</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== QUIZ ===== -->
+    <section class="chapter quiz-section" id="quiz">
+      <div class="chapter-header ch-color-quiz">
+        <span class="ch-num">🧪</span>
+        <div>
+          <h2>章節測驗</h2>
+          <p>測試你的學習成果</p>
+        </div>
+      </div>
+      <div id="quizContainer"></div>
+      <div class="quiz-result hidden" id="quizResult"></div>
+    </section>
+
+    <!-- ===== RESOURCES ===== -->
+    <section class="chapter" id="resources">
+      <div class="chapter-header ch-color-res">
+        <span class="ch-num">📂</span>
+        <div>
+          <h2>學習資源</h2>
+          <p>所有 PDF 講義與參考資料</p>
+        </div>
+      </div>
+      <div class="resource-grid" id="resourceGrid">
+        <a class="resource-card" href="pdfs/ch1-resistor.pdf" target="_blank">
+          <span class="res-icon">📄</span>
+          <span class="res-name">第一章：電阻講義</span>
+          <span class="res-tag">PDF</span>
+        </a>
+        <a class="resource-card" href="pdfs/ch2-capacitor.pdf" target="_blank">
+          <span class="res-icon">📄</span>
+          <span class="res-name">第二章：電容講義</span>
+          <span class="res-tag">PDF</span>
+        </a>
+        <a class="resource-card" href="pdfs/ch3-inductor.pdf" target="_blank">
+          <span class="res-icon">📄</span>
+          <span class="res-name">第三章：電感講義</span>
+          <span class="res-tag">PDF</span>
+        </a>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<!-- PDF Modal -->
+<div class="modal-overlay hidden" id="pdfModal">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closePDF()">✕</button>
+    <iframe id="pdfFrame" src="" frameborder="0"></iframe>
+  </div>
+</div>
+
+<!-- Back to top -->
+<button class="back-to-top" id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script src="assets/js/main.js"></script>
+</body>
+</html>
