@@ -3,283 +3,661 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>被動元件教學 | Passive Components</title>
+  <title>被動元件產業投資全指南 2026</title>
   <link rel="stylesheet" href="assets/css/style.css" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 </head>
 <body>
 
 <!-- ===== HEADER ===== -->
-<header class="site-header">
+<header class="site-header" id="top">
   <div class="header-inner">
     <div class="logo">
       <span class="logo-icon">⚡</span>
-      <span class="logo-text">被動元件教學</span>
+      <span class="logo-text">被動元件<span class="logo-sub">產業全指南</span></span>
     </div>
+    <nav class="header-nav" id="headerNav">
+      <a href="#overview"  class="nav-link">產業概覽</a>
+      <a href="#whyhot"    class="nav-link">為何熱門</a>
+      <a href="#rcl"       class="nav-link">三大元件</a>
+      <a href="#ai-server" class="nav-link">AI伺服器</a>
+      <a href="#invest"    class="nav-link">投資邏輯</a>
+      <a href="#companies" class="nav-link">公司圖譜</a>
+      <a href="#radar"     class="nav-link">雷達評分</a>
+    </nav>
     <div class="header-right">
       <div class="search-wrap">
-        <input type="text" id="searchInput" placeholder="搜尋內容..." autocomplete="off" />
-        <button id="searchBtn" aria-label="搜尋">🔍</button>
+        <input type="text" id="searchInput" placeholder="搜尋公司、元件..." autocomplete="off"/>
+        <button id="searchBtn">🔍</button>
       </div>
-      <button class="menu-toggle" id="menuToggle" aria-label="開啟選單">☰</button>
+      <button class="menu-toggle" id="menuToggle">☰</button>
     </div>
   </div>
   <div id="searchResults" class="search-results hidden"></div>
 </header>
 
-<!-- ===== LAYOUT ===== -->
-<div class="layout">
-
-  <!-- SIDEBAR -->
-  <aside class="sidebar" id="sidebar">
-    <nav class="toc">
-      <p class="toc-title">目錄</p>
-      <ul id="tocList">
-        <li><a href="#intro" class="toc-link active">📖 課程介紹</a></li>
-        <li>
-          <a href="#ch1" class="toc-link">📌 第一章：電阻</a>
-          <ul>
-            <li><a href="#ch1-1" class="toc-link sub">1-1 基本原理</a></li>
-            <li><a href="#ch1-2" class="toc-link sub">1-2 色碼辨識</a></li>
-            <li><a href="#ch1-3" class="toc-link sub">1-3 應用電路</a></li>
-          </ul>
-        </li>
-        <li>
-          <a href="#ch2" class="toc-link">📌 第二章：電容</a>
-          <ul>
-            <li><a href="#ch2-1" class="toc-link sub">2-1 基本原理</a></li>
-            <li><a href="#ch2-2" class="toc-link sub">2-2 種類與規格</a></li>
-            <li><a href="#ch2-3" class="toc-link sub">2-3 充放電特性</a></li>
-          </ul>
-        </li>
-        <li>
-          <a href="#ch3" class="toc-link">📌 第三章：電感</a>
-          <ul>
-            <li><a href="#ch3-1" class="toc-link sub">3-1 基本原理</a></li>
-            <li><a href="#ch3-2" class="toc-link sub">3-2 種類與應用</a></li>
-          </ul>
-        </li>
-        <li><a href="#quiz" class="toc-link">🧪 章節測驗</a></li>
-        <li><a href="#resources" class="toc-link">📂 學習資源</a></li>
-      </ul>
-    </nav>
-  </aside>
-
-  <!-- MAIN CONTENT -->
-  <main class="main-content" id="mainContent">
-
-    <!-- HERO -->
-    <section class="hero" id="intro">
-      <div class="hero-badge">電子學入門</div>
-      <h1>被動元件<br><span class="highlight">完整教學指南</span></h1>
-      <p class="hero-sub">從基礎原理到實際應用，系統性學習電阻、電容、電感</p>
-      <div class="hero-chips">
-        <span class="chip chip-r">⚙️ 電阻</span>
-        <span class="chip chip-c">🔋 電容</span>
-        <span class="chip chip-l">🌀 電感</span>
-      </div>
-      <div class="progress-bar-wrap">
-        <div class="progress-label">學習進度</div>
-        <div class="progress-track"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
-        <div class="progress-pct" id="progressPct">0%</div>
-      </div>
-    </section>
-
-    <!-- ===== CH1 電阻 ===== -->
-    <section class="chapter" id="ch1" data-keywords="電阻 resistor 色碼 ohm 歐姆">
-      <div class="chapter-header ch-color-r">
-        <span class="ch-num">01</span>
-        <div>
-          <h2>電阻 Resistor</h2>
-          <p>限制電流、分壓、保護元件</p>
-        </div>
-      </div>
-
-      <div class="content-block" id="ch1-1">
-        <h3>1-1 基本原理</h3>
-        <div class="concept-card">
-          <div class="formula-box">V = I × R</div>
-          <p>歐姆定律：電壓等於電流乘以電阻。電阻的單位為歐姆（Ω）。</p>
-        </div>
-        <div class="image-placeholder" data-slot="ch1-img1">
-          <span>📷 圖片區：電阻符號與實物照片</span>
-        </div>
-      </div>
-
-      <div class="content-block" id="ch1-2">
-        <h3>1-2 色碼辨識</h3>
-        <div class="color-code-demo">
-          <div class="band" style="background:#a52a2a" title="棕=1">棕</div>
-          <div class="band" style="background:#ff0000" title="紅=2">紅</div>
-          <div class="band" style="background:#ffa500" title="橙=×100">橙</div>
-          <div class="band band-tolerance" style="background:#ffd700" title="金=±5%">金</div>
-        </div>
-        <p class="code-hint">範例：棕紅橙金 → 12 × 100 = <strong>1200 Ω ± 5%</strong></p>
-      </div>
-
-      <div class="content-block" id="ch1-3">
-        <h3>1-3 應用電路</h3>
-        <div class="pdf-viewer-wrap" data-pdf="pdfs/ch1-resistor.pdf">
-          <div class="pdf-placeholder">
-            <span>📄 PDF：電阻應用電路講義</span>
-            <button class="btn-open-pdf" onclick="openPDF('pdfs/ch1-resistor.pdf')">開啟 PDF</button>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ===== CH2 電容 ===== -->
-    <section class="chapter" id="ch2" data-keywords="電容 capacitor 充電 放電 farad 法拉">
-      <div class="chapter-header ch-color-c">
-        <span class="ch-num">02</span>
-        <div>
-          <h2>電容 Capacitor</h2>
-          <p>儲存電荷、濾波、耦合與去耦合</p>
-        </div>
-      </div>
-
-      <div class="content-block" id="ch2-1">
-        <h3>2-1 基本原理</h3>
-        <div class="concept-card">
-          <div class="formula-box">Q = C × V</div>
-          <p>電容儲存的電荷量等於電容值乘以電壓。單位為法拉（F）。</p>
-        </div>
-        <div class="image-placeholder" data-slot="ch2-img1">
-          <span>📷 圖片區：電容種類對比圖</span>
-        </div>
-      </div>
-
-      <div class="content-block" id="ch2-2">
-        <h3>2-2 種類與規格</h3>
-        <div class="card-grid">
-          <div class="info-card card-blue">
-            <div class="card-icon">🔵</div>
-            <h4>陶瓷電容</h4>
-            <p>小容量、高頻特性佳</p>
-          </div>
-          <div class="info-card card-green">
-            <div class="card-icon">🟢</div>
-            <h4>電解電容</h4>
-            <p>大容量、有極性</p>
-          </div>
-          <div class="info-card card-purple">
-            <div class="card-icon">🟣</div>
-            <h4>薄膜電容</h4>
-            <p>精度高、穩定性佳</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="content-block" id="ch2-3">
-        <h3>2-3 充放電特性</h3>
-        <div class="concept-card">
-          <div class="formula-box">τ = R × C</div>
-          <p>時間常數 τ（tau）= 電阻 × 電容。充電至 63.2% 所需時間。</p>
-        </div>
-        <div class="pdf-viewer-wrap" data-pdf="pdfs/ch2-capacitor.pdf">
-          <div class="pdf-placeholder">
-            <span>📄 PDF：電容充放電講義</span>
-            <button class="btn-open-pdf" onclick="openPDF('pdfs/ch2-capacitor.pdf')">開啟 PDF</button>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ===== CH3 電感 ===== -->
-    <section class="chapter" id="ch3" data-keywords="電感 inductor 線圈 henry 亨利 磁場">
-      <div class="chapter-header ch-color-l">
-        <span class="ch-num">03</span>
-        <div>
-          <h2>電感 Inductor</h2>
-          <p>儲存磁能、濾波、變壓器原理</p>
-        </div>
-      </div>
-
-      <div class="content-block" id="ch3-1">
-        <h3>3-1 基本原理</h3>
-        <div class="concept-card">
-          <div class="formula-box">V = L × (dI/dt)</div>
-          <p>電感電壓與電流變化率成正比。單位為亨利（H）。</p>
-        </div>
-        <div class="image-placeholder" data-slot="ch3-img1">
-          <span>📷 圖片區：電感實物照片</span>
-        </div>
-      </div>
-
-      <div class="content-block" id="ch3-2">
-        <h3>3-2 種類與應用</h3>
-        <div class="card-grid">
-          <div class="info-card card-orange">
-            <div class="card-icon">🟠</div>
-            <h4>空心線圈</h4>
-            <p>高頻應用、無鐵芯損耗</p>
-          </div>
-          <div class="info-card card-red">
-            <div class="card-icon">🔴</div>
-            <h4>鐵芯電感</h4>
-            <p>大電感量、電源濾波</p>
-          </div>
-        </div>
-        <div class="pdf-viewer-wrap" data-pdf="pdfs/ch3-inductor.pdf">
-          <div class="pdf-placeholder">
-            <span>📄 PDF：電感應用講義</span>
-            <button class="btn-open-pdf" onclick="openPDF('pdfs/ch3-inductor.pdf')">開啟 PDF</button>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ===== QUIZ ===== -->
-    <section class="chapter quiz-section" id="quiz">
-      <div class="chapter-header ch-color-quiz">
-        <span class="ch-num">🧪</span>
-        <div>
-          <h2>章節測驗</h2>
-          <p>測試你的學習成果</p>
-        </div>
-      </div>
-      <div id="quizContainer"></div>
-      <div class="quiz-result hidden" id="quizResult"></div>
-    </section>
-
-    <!-- ===== RESOURCES ===== -->
-    <section class="chapter" id="resources">
-      <div class="chapter-header ch-color-res">
-        <span class="ch-num">📂</span>
-        <div>
-          <h2>學習資源</h2>
-          <p>所有 PDF 講義與參考資料</p>
-        </div>
-      </div>
-      <div class="resource-grid" id="resourceGrid">
-        <a class="resource-card" href="pdfs/ch1-resistor.pdf" target="_blank">
-          <span class="res-icon">📄</span>
-          <span class="res-name">第一章：電阻講義</span>
-          <span class="res-tag">PDF</span>
-        </a>
-        <a class="resource-card" href="pdfs/ch2-capacitor.pdf" target="_blank">
-          <span class="res-icon">📄</span>
-          <span class="res-name">第二章：電容講義</span>
-          <span class="res-tag">PDF</span>
-        </a>
-        <a class="resource-card" href="pdfs/ch3-inductor.pdf" target="_blank">
-          <span class="res-icon">📄</span>
-          <span class="res-name">第三章：電感講義</span>
-          <span class="res-tag">PDF</span>
-        </a>
-      </div>
-    </section>
-
-  </main>
-</div>
-
-<!-- PDF Modal -->
-<div class="modal-overlay hidden" id="pdfModal">
-  <div class="modal-box">
-    <button class="modal-close" onclick="closePDF()">✕</button>
-    <iframe id="pdfFrame" src="" frameborder="0"></iframe>
+<!-- ===== HERO ===== -->
+<section class="hero" id="hero">
+  <div class="hero-bg-shapes">
+    <div class="shape s1"></div><div class="shape s2"></div><div class="shape s3"></div>
   </div>
+  <div class="hero-content">
+    <div class="hero-badge">2026 最新研究報告</div>
+    <h1>被動元件產業<br><span class="hero-gradient">投資全指南</span></h1>
+    <p class="hero-desc">AI 伺服器電力架構升級 × 車用電子規格提升 × 日系龍頭漲價<br>台灣 30+ 家公司深度解析，找出本波行情最受惠的關鍵位置</p>
+    <div class="hero-stats">
+      <div class="stat-card">
+        <div class="stat-num">5大</div>
+        <div class="stat-label">推升力量</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">30+</div>
+        <div class="stat-label">台廠深度解析</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">800V</div>
+        <div class="stat-label">DC AI 架構升級</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">46%+</div>
+        <div class="stat-label">國巨鉭電容市占</div>
+      </div>
+    </div>
+    <div class="hero-chips">
+      <a href="#rcl" class="chip chip-r">⚙️ 電阻</a>
+      <a href="#rcl" class="chip chip-c">🔋 電容</a>
+      <a href="#rcl" class="chip chip-l">🌀 電感</a>
+      <a href="#ai-server" class="chip chip-ai">🤖 AI Server</a>
+      <a href="#companies" class="chip chip-tw">🇹🇼 台灣公司</a>
+    </div>
+  </div>
+  <div class="scroll-hint">向下捲動探索 ↓</div>
+</section>
+
+<!-- ===== 產業概覽 ===== -->
+<section class="content-section" id="overview">
+  <div class="section-header">
+    <div class="section-tag tag-blue">產業定義</div>
+    <h2>被動元件產業概覽</h2>
+    <p>不以主動放大為主要功能，負責儲能、耗能、濾波、耦合、諧振、保護、阻抗匹配的元件家族</p>
+  </div>
+
+  <div class="overview-grid">
+    <div class="overview-card ov-r">
+      <div class="ov-icon">⚙️</div>
+      <h3>電阻 R</h3>
+      <p>厚膜・薄膜・電流感測・排阻・金屬板</p>
+      <div class="ov-companies">國巨・華新科・光頡・天二</div>
+    </div>
+    <div class="overview-card ov-c">
+      <div class="ov-icon">🔋</div>
+      <h3>電容 C</h3>
+      <p>MLCC・鉭電・鋁電解・固態・Hybrid・薄膜・安規</p>
+      <div class="ov-companies">國巨・華新科・禾伸堂・信昌電・立隆電・鈺邦</div>
+    </div>
+    <div class="overview-card ov-l">
+      <div class="ov-icon">🌀</div>
+      <h3>電感 L</h3>
+      <p>功率電感・磁珠・共模濾波・TLVR・高頻RF電感</p>
+      <div class="ov-companies">臺慶科・鈞寶・千如・聯寶・今展科</div>
+    </div>
+    <div class="overview-card ov-p">
+      <div class="ov-icon">🛡️</div>
+      <h3>保護元件</h3>
+      <p>PPTC・MOV/GDT・ESD/TVS・eFuse</p>
+      <div class="ov-companies">興勤・聚鼎・富致</div>
+    </div>
+    <div class="overview-card ov-f">
+      <div class="ov-icon">📡</div>
+      <h3>頻率/RF元件</h3>
+      <p>Crystal・XO/VCXO/TCXO・SAW/BAW・晶片天線</p>
+      <div class="ov-companies">台嘉碩・希華・安碁・泰藝・加高・詠業</div>
+    </div>
+    <div class="overview-card ov-u">
+      <div class="ov-icon">🏭</div>
+      <h3>上游材料/通路</h3>
+      <p>陶瓷粉末・鋁箔・銀漿・磁材・代理商</p>
+      <div class="ov-companies">信昌電・九豪・勤凱・立敦・日電貿・蜜望實</div>
+    </div>
+  </div>
+
+  <!-- Supply chain diagram -->
+  <div class="chain-diagram">
+    <div class="chain-title">台灣被動元件供應鏈</div>
+    <div class="chain-flow">
+      <div class="chain-node cn-1">
+        <div class="cn-label">原材料</div>
+        <div class="cn-items">銀/釕/鎳/銅<br>鋁箔/電解液<br>陶瓷粉末<br>磁粉/鐵氧體</div>
+      </div>
+      <div class="chain-arrow">→</div>
+      <div class="chain-node cn-2">
+        <div class="cn-label">上游材料</div>
+        <div class="cn-items">信昌電 陶瓷粉<br>九豪 基板<br>勤凱 導電漿<br>立敦 鋁箔</div>
+      </div>
+      <div class="chain-arrow">→</div>
+      <div class="chain-node cn-3">
+        <div class="cn-label">中游元件製造</div>
+        <div class="cn-items">國巨/華新科/禾伸堂<br>立隆/金山/鈺邦<br>臺慶科/千如/鈞寶<br>興勤/聚鼎/富致</div>
+      </div>
+      <div class="chain-arrow">→</div>
+      <div class="chain-node cn-4">
+        <div class="cn-label">代理/通路</div>
+        <div class="cn-items">日電貿<br>蜜望實</div>
+      </div>
+      <div class="chain-arrow">→</div>
+      <div class="chain-node cn-5">
+        <div class="cn-label">終端應用</div>
+        <div class="cn-items">AI Server<br>資料中心<br>車用電子<br>工業/網通</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Company classification table -->
+  <div class="table-wrap">
+    <div class="table-title">台灣公司分類矩陣（部分列示）</div>
+    <div class="table-scroll">
+      <table class="company-table">
+        <thead>
+          <tr><th>公司</th><th>主分類</th><th>主要產品</th><th>市占/地位</th></tr>
+        </thead>
+        <tbody>
+          <tr class="row-blue"><td>國巨 2327</td><td>綜合平台</td><td>MLCC、鉭電容、晶片電阻</td><td>晶片電阻全球第1；鉭電容全球第1（>46%）</td></tr>
+          <tr class="row-blue"><td>華新科 2492</td><td>綜合平台</td><td>陶瓷電容、電阻、電感、RF</td><td>未公開</td></tr>
+          <tr class="row-blue"><td>禾伸堂 3026</td><td>MLCC</td><td>高壓高容 NP0/X7S/X8M MLCC</td><td>未公開</td></tr>
+          <tr class="row-blue"><td>信昌電 6173</td><td>MLCC/上游材料</td><td>MLCC、電阻、電感、陶瓷粉末</td><td>未公開</td></tr>
+          <tr class="row-green"><td>立隆電 2472</td><td>鋁電/Hybrid</td><td>OP-CAP、Hybrid、SMD鋁電、EDLC</td><td>未公開</td></tr>
+          <tr class="row-green"><td>鈺邦 6449</td><td>固態/Hybrid</td><td>導電高分子片式固態電容、SMLC</td><td>未公開</td></tr>
+          <tr class="row-green"><td>金山電 8042</td><td>鋁電</td><td>鋁電解電容、高值化產品</td><td>未公開</td></tr>
+          <tr class="row-orange"><td>臺慶科 3357</td><td>電感/磁材</td><td>功率電感、TLVR</td><td>未公開</td></tr>
+          <tr class="row-orange"><td>鈞寶 6155</td><td>電感/EMI</td><td>EMI鐵氧體、功率電感、共模抗流圈</td><td>未公開</td></tr>
+          <tr class="row-orange"><td>千如 5215</td><td>電感/變壓器</td><td>車規電感、TLVR、共模濾波、LTCC</td><td>未公開</td></tr>
+          <tr class="row-purple"><td>希華 2492</td><td>頻率元件</td><td>XO、TCXO、VCTCXO、高頻振盪器</td><td>未公開</td></tr>
+          <tr class="row-purple"><td>台嘉碩 3264</td><td>頻率/RF</td><td>SAW、BAW、石英振盪晶體、天線</td><td>未公開</td></tr>
+          <tr class="row-red"><td>興勤 2428</td><td>保護元件</td><td>NTC/PTC/PPTC、Varistor、GDT、TVS</td><td>未公開</td></tr>
+          <tr class="row-red"><td>聚鼎 6224</td><td>保護元件</td><td>PPTC、Fuse、eFuse、熱管理</td><td>亞洲第一間專業PPTC製造商</td></tr>
+          <tr class="row-gray"><td>日電貿 2428</td><td>通路</td><td>代理陶瓷電容、固態電容、電解電容</td><td>台灣最大被動元件代理商</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- PDF page 6-11 infographics -->
+  <div class="infographic-row">
+    <div class="infographic-wrap">
+      <img src="assets/img/pdf-pages/page-06.jpg" alt="產業結構圖" loading="lazy" onclick="openImg(this.src)" />
+    </div>
+    <div class="infographic-wrap">
+      <img src="assets/img/pdf-pages/page-07.jpg" alt="供應鏈圖" loading="lazy" onclick="openImg(this.src)" />
+    </div>
+  </div>
+</section>
+
+<!-- ===== 為何熱門 ===== -->
+<section class="content-section bg-dark" id="whyhot">
+  <div class="section-header light">
+    <div class="section-tag tag-gold">2026 行情分析</div>
+    <h2>為何現在成為熱門？</h2>
+    <p>本輪行情不是「缺貨恐慌」，而是 AI 功率架構升級 × 規格提升 × 供應重分配的結構性循環</p>
+  </div>
+
+  <div class="reasons-grid">
+    <div class="reason-card">
+      <div class="reason-num">01</div>
+      <div class="reason-icon">🤖</div>
+      <h3>AI 伺服器電力架構升級</h3>
+      <p>NVIDIA 把 800VDC 定為下一代 AI 資料中心架構，降低電流、減少銅用量；Vertiv 稱此為未來十年 AI 基礎設施的定義性變化。高壓 MLCC、鉭/固態/Hybrid 電容、功率電感、保護元件全面升規。</p>
+      <div class="reason-tag">禾伸堂明確指出 NP0/X7S/X8M 是核心必備</div>
+    </div>
+    <div class="reason-card">
+      <div class="reason-num">02</div>
+      <div class="reason-icon">📈</div>
+      <h3>需求不只是量增，而是規格升級 ASP 提升</h3>
+      <p>Murata FY2025/26 財報：伺服器帶動電容與 EMI 濾波器成長。YAGEO 指出鉭電容與磁芯材料切入 AI 效率議題。光頡 AI 營收占比由 5% 升至 12%，漲幅約 30%-35%。</p>
+      <div class="reason-tag">高規格料號 ASP 彈性更大</div>
+    </div>
+    <div class="reason-card">
+      <div class="reason-num">03</div>
+      <div class="reason-icon">🏭</div>
+      <h3>高階產能被重新配置</h3>
+      <p>Murata 供應全球約 40% MLCC；其財報顯示資料中心電容需求強勁並規劃進一步投資。龍頭把資源投向高階品，造成一般品被擠壓 — 2026 年最熱門的「commodity squeeze」話題。</p>
+      <div class="reason-tag">YAGEO 鉭電容市占逾 46%</div>
+    </div>
+    <div class="reason-card">
+      <div class="reason-num">04</div>
+      <div class="reason-icon">💰</div>
+      <h3>原材料成本上升與漲價訊號擴散</h3>
+      <p>TrendForce：Murata 2026 年 4 月起調漲磁珠、功率電感、RF 電感、共模電感，主因銀價上升。Taiyo Yuden 自 5 月起調漲部分 MLCC、電感、磁珠、RF 元件與鋁電。</p>
+      <div class="reason-tag">高階料號議價權重新回到供應商</div>
+    </div>
+    <div class="reason-card">
+      <div class="reason-num">05</div>
+      <div class="reason-icon">🏪</div>
+      <h3>通路重新得到庫存與配額價值</h3>
+      <p>日電貿年報：2024 年陶瓷電容佔營收 47.37%、固態電容 21.08%。部分高階被動件交期拉長至 52 週。當原廠漲價、交期拉長，代理商的品牌組合、庫存管理與配額分配能力被重新估值。</p>
+      <div class="reason-tag">日電貿自稱台灣最大被動元件代理商</div>
+    </div>
+  </div>
+
+  <!-- 2018 vs 2026 對照 -->
+  <div class="compare-box">
+    <div class="compare-title">🔄 2018 vs 2026 循環對照</div>
+    <div class="compare-grid">
+      <div class="compare-col col-2018">
+        <div class="compare-year">2018 那一輪</div>
+        <ul>
+          <li>手機/車用需求成長</li>
+          <li>恐慌性重複下單推升價格</li>
+          <li>大量 Overbooking</li>
+          <li>價格暴衝後快速反轉</li>
+          <li>庫存調整拉長至 2019-2023</li>
+        </ul>
+      </div>
+      <div class="compare-vs">VS</div>
+      <div class="compare-col col-2026">
+        <div class="compare-year">2026 這一輪</div>
+        <ul>
+          <li>AI 伺服器功率架構升級</li>
+          <li>高壓高容高可靠度規格提升</li>
+          <li>結構性需求 + 成本轉嫁</li>
+          <li>少數供應商先受益</li>
+          <li>可持續性更強，分布更集中</li>
+        </ul>
+      </div>
+    </div>
+    <div class="compare-note">本波特色：不只是景氣循環，也包含 AI 驅動的規格升級</div>
+  </div>
+
+  <!-- PDF page why hot infographic -->
+  <div class="infographic-single">
+    <img src="assets/img/pdf-pages/page-05.jpg" alt="為何成為熱門股票" loading="lazy" onclick="openImg(this.src)" />
+  </div>
+</section>
+
+<!-- ===== 三大元件解析 ===== -->
+<section class="content-section" id="rcl">
+  <div class="section-header">
+    <div class="section-tag tag-purple">元件深解</div>
+    <h2>三大被動元件解析</h2>
+    <p>電阻、電容、電感的功能、種類、AI 時代投資邏輯</p>
+  </div>
+
+  <!-- Tabs -->
+  <div class="rcl-tabs">
+    <button class="rcl-tab active" data-tab="cap">🔋 電容 Capacitor</button>
+    <button class="rcl-tab" data-tab="res">⚙️ 電阻 Resistor</button>
+    <button class="rcl-tab" data-tab="ind">🌀 電感 Inductor</button>
+  </div>
+
+  <!-- 電容 -->
+  <div class="rcl-panel active" id="tab-cap">
+    <div class="rcl-layout">
+      <div class="rcl-image">
+        <img src="assets/img/pdf-pages/page-01.jpg" alt="被動元件：電容" onclick="openImg(this.src)" />
+        <div class="img-hint">點擊放大</div>
+      </div>
+      <div class="rcl-content">
+        <h3 class="rcl-title title-c">電容 Capacitor</h3>
+        <p class="rcl-subtitle">儲存電荷、穩壓、濾波、去耦</p>
+        <div class="formula-badge">Q = C × V</div>
+        <div class="type-list">
+          <div class="type-item ti-blue"><strong>① MLCC</strong> 體積小、高頻佳、低ESR — AI伺服器、手機、車用、DDR5</div>
+          <div class="type-item ti-orange"><strong>② 鉭電容</strong> 高容值、穩定性佳 — 高可靠電源、AI伺服器</div>
+          <div class="type-item ti-green"><strong>③ 鋁電解</strong> 大容量、成本低 — 電源供應器、工控、UPS</div>
+          <div class="type-item ti-red"><strong>④ 薄膜電容</strong> 耐高壓、低損耗 — 高壓電源、EV、DC-link</div>
+          <div class="type-item ti-purple"><strong>⑤ 固態/Hybrid</strong> 低ESR、快速響應 — AI GPU板近載供電</div>
+        </div>
+        <div class="invest-box">
+          <div class="invest-title">📊 投資邏輯</div>
+          <ul>
+            <li>重點看<strong>高壓、高容、高溫、低損耗</strong>的乘數效果</li>
+            <li>禾伸堂：800V HVDC 核心 NP0/X7S/X8M，啟動第二個4年30億擴產</li>
+            <li>信昌電：MLCC + 陶瓷粉末一體化，AI 交期拉長至16週以上</li>
+            <li>鈺邦：固態/Hybrid 朝 Rubin 平台送樣，V-Chip、SMLC 擴產</li>
+            <li>立隆電：AI GPU 板導入 Polymer/Hybrid，AI 比重可望倍數成長</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 電阻 -->
+  <div class="rcl-panel" id="tab-res">
+    <div class="rcl-layout">
+      <div class="rcl-image">
+        <img src="assets/img/pdf-pages/page-02.jpg" alt="被動元件：電阻" onclick="openImg(this.src)" />
+        <div class="img-hint">點擊放大</div>
+      </div>
+      <div class="rcl-content">
+        <h3 class="rcl-title title-r">電阻 Resistor</h3>
+        <p class="rcl-subtitle">限流、分壓、保護電路、電流偵測</p>
+        <div class="formula-badge formula-r">V = I × R</div>
+        <div class="type-list">
+          <div class="type-item ti-gray"><strong>① 厚膜電阻</strong> 成本低、量大 — 一般電子、電源</div>
+          <div class="type-item ti-blue"><strong>② 薄膜電阻</strong> 高精度、低溫漂 — 精密量測、醫療、航太</div>
+          <div class="type-item ti-green"><strong>③ 金屬膜電阻</strong> 高穩定性、低雜訊 — 音訊、訊號處理</div>
+          <div class="type-item ti-orange"><strong>④ 繞線電阻</strong> 高功率、精度高 — 工業、大電流、煞車負載</div>
+          <div class="type-item ti-red"><strong>⑤ 分流/電流感測電阻</strong> 低阻值、高精度 — AI伺服器電源、EV、PMIC</div>
+        </div>
+        <div class="invest-box invest-box-r">
+          <div class="invest-title">📊 投資邏輯</div>
+          <ul>
+            <li>AI/伺服器/DDR5 升規 → <strong>精密化、高功率化、電流感測化</strong></li>
+            <li>國巨：全球最大晶片電阻廠</li>
+            <li>光頡：薄膜精密 + 電流感測 + 高頻電感複合平台，AI 比重升至 12%</li>
+            <li>華新科：AI 產品帶動特殊電阻出貨，ASP 有上移空間</li>
+            <li>銀價高檔：具 price pass-through 的薄膜廠彈性更大</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 電感 -->
+  <div class="rcl-panel" id="tab-ind">
+    <div class="rcl-layout">
+      <div class="rcl-image">
+        <img src="assets/img/pdf-pages/page-03.jpg" alt="被動元件：電感與磁性元件" onclick="openImg(this.src)" />
+        <div class="img-hint">點擊放大</div>
+      </div>
+      <div class="rcl-content">
+        <h3 class="rcl-title title-l">電感 Inductor</h3>
+        <p class="rcl-subtitle">儲能、平滑電流、抑制雜訊、EMI 控制</p>
+        <div class="formula-badge formula-l">V = L × dI/dt</div>
+        <div class="type-list">
+          <div class="type-item ti-blue"><strong>① 功率電感</strong> DC-DC核心、高電流低DCR — 伺服器、EV</div>
+          <div class="type-item ti-green"><strong>② 一體成型電感</strong> 體積小、漏磁低 — 高密度電源模組</div>
+          <div class="type-item ti-orange"><strong>③ 高頻電感</strong> 低損耗、適合GHz — 通訊、RF模組</div>
+          <div class="type-item ti-purple"><strong>④ 共模電感</strong> 抑制共模雜訊 — 介面、網通、電源入端</div>
+          <div class="type-item ti-red"><strong>⑤ TLVR 電感</strong> 反應快、降低voltage droop — AI GPU/CPU 供電</div>
+          <div class="type-item ti-gray"><strong>⑥ 磁珠</strong> 抑制高頻 EMI — 電源線、訊號線</div>
+        </div>
+        <div class="invest-box invest-box-l">
+          <div class="invest-title">📊 投資邏輯</div>
+          <ul>
+            <li><strong>電流越大、電壓越低、瞬態越快，電感價值越往上</strong></li>
+            <li>臺慶科：TLVR 已商品化，準備量產，官網直接展示料號</li>
+            <li>千如：TLVR + 車規功率電感 + 共模濾波，AI × 車用雙題材</li>
+            <li>鈞寶：EMI 抑制元件接單能見度提升，逐步切入伺服器</li>
+            <li>Murata/Taiyo Yuden 先對磁珠喊漲 → 台廠 pricing power 重估</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== AI 伺服器 ===== -->
+<section class="content-section bg-tech" id="ai-server">
+  <div class="section-header light">
+    <div class="section-tag tag-cyan">AI 應用</div>
+    <h2>AI 伺服器中的被動元件角色</h2>
+    <p>從市電輸入到 GPU/CPU 晶片，每一級供電都需要被動元件升規</p>
+  </div>
+
+  <div class="ai-power-chain">
+    <div class="apc-step">
+      <div class="apc-icon">🔌</div>
+      <div class="apc-name">市電 AC<br>100-240V</div>
+    </div>
+    <div class="apc-arrow">→</div>
+    <div class="apc-step apc-highlight">
+      <div class="apc-icon">⚡</div>
+      <div class="apc-name">PSU / AC-DC</div>
+      <div class="apc-parts">鋁電解/薄膜電容<br>共模電感<br>保護元件(NTC/MOV)</div>
+    </div>
+    <div class="apc-arrow">→</div>
+    <div class="apc-step apc-highlight">
+      <div class="apc-icon">🔶</div>
+      <div class="apc-name">PDB / IBC<br>48V Bus</div>
+      <div class="apc-parts">高耐壓 MLCC<br>功率電感<br>濾波元件(X/Y電容)</div>
+    </div>
+    <div class="apc-arrow">→</div>
+    <div class="apc-step apc-highlight">
+      <div class="apc-icon">🟧</div>
+      <div class="apc-name">VRM<br>電壓調節</div>
+      <div class="apc-parts">高容值 MLCC<br>功率電感/TLVR<br>分流電阻(電流偵測)</div>
+    </div>
+    <div class="apc-arrow">→</div>
+    <div class="apc-step apc-highlight">
+      <div class="apc-icon">🖥️</div>
+      <div class="apc-name">GPU/CPU/xPU</div>
+      <div class="apc-parts">去耦 MLCC(高密度)<br>鋁電容/固態電容<br>ESD/eFuse 保護</div>
+    </div>
+    <div class="apc-arrow">→</div>
+    <div class="apc-step apc-highlight">
+      <div class="apc-icon">💾</div>
+      <div class="apc-name">DDR5 / PMIC</div>
+      <div class="apc-parts">高耐壓 MLCC<br>去耦電容</div>
+    </div>
+  </div>
+
+  <div class="ai-key-points">
+    <div class="akp">
+      <span class="akp-icon">⚡</span>
+      <span>核心電壓低、電流大</span>
+    </div>
+    <div class="akp">
+      <span class="akp-icon">📊</span>
+      <span>瞬態響應要求高</span>
+    </div>
+    <div class="akp">
+      <span class="akp-icon">🔋</span>
+      <span>48V / HVDC 架構升級</span>
+    </div>
+    <div class="akp">
+      <span class="akp-icon">📈</span>
+      <span>高階被動元件用量與規格同步升級</span>
+    </div>
+  </div>
+
+  <div class="infographic-single">
+    <img src="assets/img/pdf-pages/page-04.jpg" alt="AI伺服器中的被動元件角色" loading="lazy" onclick="openImg(this.src)" />
+  </div>
+
+  <div class="infographic-row">
+    <div class="infographic-wrap">
+      <img src="assets/img/pdf-pages/page-08.jpg" alt="AI Server 配置" loading="lazy" onclick="openImg(this.src)" />
+    </div>
+    <div class="infographic-wrap">
+      <img src="assets/img/pdf-pages/page-09.jpg" alt="AI 供電架構" loading="lazy" onclick="openImg(this.src)" />
+    </div>
+  </div>
+</section>
+
+<!-- ===== 投資邏輯 ===== -->
+<section class="content-section" id="invest">
+  <div class="section-header">
+    <div class="section-tag tag-gold">投資分析</div>
+    <h2>各產品線投資邏輯</h2>
+    <p>按產品類別解析受惠強度與關鍵公司，不是「所有被動元件一起漲」</p>
+  </div>
+
+  <div class="invest-accordion" id="investAccordion">
+    <div class="ia-item">
+      <button class="ia-btn ia-btn-blue active" onclick="toggleIA(this)">
+        <span class="ia-icon">🔷</span> MLCC — 高壓高容是核心
+        <span class="ia-arrow">▼</span>
+      </button>
+      <div class="ia-body open">
+        <p>投資邏輯不是看出貨量，而是看<strong>高壓、高容、高溫、低損耗</strong>的乘數效果。禾伸堂強調 AI Server Power 朝 800V HVDC，NP0/X7S/X8M 是必要核心。信昌電具備 MLCC + 上游粉末一體化優勢，AI 交期拉長至 16 週，訂單能見度超 6 個月。</p>
+        <div class="ia-companies">
+          <span class="ia-co">禾伸堂 3026</span><span class="ia-co">信昌電 6173</span><span class="ia-co">國巨 2327</span><span class="ia-co">華新科 2492</span>
+        </div>
+      </div>
+    </div>
+    <div class="ia-item">
+      <button class="ia-btn ia-btn-orange" onclick="toggleIA(this)">
+        <span class="ia-icon">🟠</span> 鉭電容 — 高可靠領域 Premium
+        <span class="ia-arrow">▼</span>
+      </button>
+      <div class="ia-body">
+        <p>在高可靠、高溫、高容、高體積效率應用中仍有不可替代性。YAGEO 年報：鉭電容全球市占逾 46%，重點市場為汽車、工業、軍工、航太、醫療、高階電腦。不是老產品，而是高可靠領域的 premium capacitor。</p>
+        <div class="ia-companies">
+          <span class="ia-co">國巨 2327</span>
+        </div>
+      </div>
+    </div>
+    <div class="ia-item">
+      <button class="ia-btn ia-btn-green" onclick="toggleIA(this)">
+        <span class="ia-icon">🟢</span> 鋁電/固態/Hybrid — 電源架構升級
+        <span class="ia-arrow">▼</span>
+      </button>
+      <div class="ia-body">
+        <p>關鍵不再只是循環補庫存，而是電源架構升級。AI GPU 板導入 Hybrid 與 Polymer，立隆電 AI 比重可望倍數成長。鈺邦直接把固態電容定位在 DC/DC 轉換器、電壓調節器近載場景；啟動擴產，朝 Rubin 平台送樣。</p>
+        <div class="ia-companies">
+          <span class="ia-co">立隆電 2472</span><span class="ia-co">鈺邦 6449</span><span class="ia-co">金山電 8042</span><span class="ia-co">凱美 2486</span>
+        </div>
+      </div>
+    </div>
+    <div class="ia-item">
+      <button class="ia-btn ia-btn-red" onclick="toggleIA(this)">
+        <span class="ia-icon">🔴</span> 電阻 — 精密化、電流感測化
+        <span class="ia-arrow">▼</span>
+      </button>
+      <div class="ia-body">
+        <p>AI/伺服器/DDR5 升規後，轉為精密化、高功率化、低阻值化、大電流電流感測化。光頡是薄膜精密電阻 + 電流感測 + 高頻電感的複合平台，AI 升規不只吃一個品類。銀價持續高檔對具備 price pass-through 的薄膜廠更有利。</p>
+        <div class="ia-companies">
+          <span class="ia-co">國巨 2327</span><span class="ia-co">光頡 5209</span><span class="ia-co">華新科 2492</span><span class="ia-co">天二 3592</span>
+        </div>
+      </div>
+    </div>
+    <div class="ia-item">
+      <button class="ia-btn ia-btn-purple" onclick="toggleIA(this)">
+        <span class="ia-icon">🟣</span> 電感/TLVR — 最容易被低估的品類
+        <span class="ia-arrow">▼</span>
+      </button>
+      <div class="ia-body">
+        <p>TLVR 是本輪行情中最容易被低估的品類。AI 伺服器近載 VRM 需要更快瞬態響應與更高電流密度，TLVR 可明顯改善瞬態響應並減少電容用量。臺慶科與千如已把 TLVR 商品化；Murata/Taiyo Yuden 對磁珠與功率電感喊漲，定價權重回。</p>
+        <div class="ia-companies">
+          <span class="ia-co">臺慶科 3357</span><span class="ia-co">千如 5215</span><span class="ia-co">鈞寶 6155</span><span class="ia-co">光頡 5209</span>
+        </div>
+      </div>
+    </div>
+    <div class="ia-item">
+      <button class="ia-btn ia-btn-cyan" onclick="toggleIA(this)">
+        <span class="ia-icon">🔵</span> 頻率元件 — 低相噪時脈的 Premium Market
+        <span class="ia-arrow">▼</span>
+      </button>
+      <div class="ia-body">
+        <p>資料中心互連速度拉高、交換器升級、LEO 與 GNSS 精度提升時，低相噪、低抖動、高穩定時脈就是 premium timing market 的核心。希華官網直指 XO/TCXO 用於資料中心、伺服器、交換器與光模組。</p>
+        <div class="ia-companies">
+          <span class="ia-co">希華 2492</span><span class="ia-co">台嘉碩 3264</span><span class="ia-co">泰藝 3685</span><span class="ia-co">安碁 6762</span>
+        </div>
+      </div>
+    </div>
+    <div class="ia-item">
+      <button class="ia-btn ia-btn-amber" onclick="toggleIA(this)">
+        <span class="ia-icon">🛡️</span> 保護元件 — 高價晶片使容錯成本急升
+        <span class="ia-arrow">▼</span>
+      </button>
+      <div class="ia-body">
+        <p>高電流、高密度、高價值主動晶片變多，容錯成本急升。保護元件不是配角，而是越來越偏向可靠度的必要採購。富致把 PPTC 與新一代功率半導體連結 AI/EV；聚鼎從 PPTC 升級到 eFuse/熱管理，單價提高。</p>
+        <div class="ia-companies">
+          <span class="ia-co">興勤 2428</span><span class="ia-co">聚鼎 6224</span><span class="ia-co">富致 3147</span>
+        </div>
+      </div>
+    </div>
+    <div class="ia-item">
+      <button class="ia-btn ia-btn-teal" onclick="toggleIA(this)">
+        <span class="ia-icon">🏪</span> 通路商 — 配額管理價值提升
+        <span class="ia-arrow">▼</span>
+      </button>
+      <div class="ia-body">
+        <p>通路股的邏輯最容易被忽略。三件事同時出現：高階品牌組合、庫存重估、配額與交期管理價值提升。蜜望實是 Taiyo Yuden 正規經銷商，主業是 MLCC 與電感代理。當原廠調價且客戶需要快速配料，通路商的評價通常放大。</p>
+        <div class="ia-companies">
+          <span class="ia-co">日電貿 5225</span><span class="ia-co">蜜望實 6482</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="infographic-row">
+    <div class="infographic-wrap">
+      <img src="assets/img/pdf-pages/page-10.jpg" alt="投資邏輯圖" loading="lazy" onclick="openImg(this.src)" />
+    </div>
+    <div class="infographic-wrap">
+      <img src="assets/img/pdf-pages/page-11.jpg" alt="產品線分析" loading="lazy" onclick="openImg(this.src)" />
+    </div>
+  </div>
+</section>
+
+<!-- ===== 公司圖譜 ===== -->
+<section class="content-section bg-light" id="companies">
+  <div class="section-header">
+    <div class="section-tag tag-blue">公司深解</div>
+    <h2>台灣公司圖譜</h2>
+    <p>30+ 家台股被動元件公司分類解析，按類別篩選</p>
+  </div>
+
+  <div class="filter-tabs" id="filterTabs">
+    <button class="ftab active" data-filter="all">全部</button>
+    <button class="ftab" data-filter="platform">🔷 綜合平台</button>
+    <button class="ftab" data-filter="cap">🔋 電容</button>
+    <button class="ftab" data-filter="res">⚙️ 電阻</button>
+    <button class="ftab" data-filter="ind">🌀 電感/磁材</button>
+    <button class="ftab" data-filter="freq">📡 頻率/RF</button>
+    <button class="ftab" data-filter="prot">🛡️ 保護元件</button>
+    <button class="ftab" data-filter="upstream">🏭 上游材料</button>
+    <button class="ftab" data-filter="dist">🏪 通路</button>
+  </div>
+
+  <div class="company-cards" id="companyCards">
+    <!-- Generated by JS -->
+  </div>
+</section>
+
+<!-- ===== 雷達圖 ===== -->
+<section class="content-section" id="radar">
+  <div class="section-header">
+    <div class="section-tag tag-purple">受惠強度分析</div>
+    <h2>公司受惠強度雷達圖</h2>
+    <p>依 AI曝險、車用曝險、漲價轉嫁、供給稀缺、通路/平台優勢 5 維度評分（0-5分）</p>
+  </div>
+
+  <div class="radar-layout">
+    <div class="radar-selector">
+      <div class="rs-title">選擇公司（最多8家）</div>
+      <div class="rs-grid" id="radarSelector">
+        <!-- Generated by JS -->
+      </div>
+    </div>
+    <div class="radar-chart-wrap">
+      <canvas id="radarChart"></canvas>
+    </div>
+  </div>
+
+  <!-- Scores table -->
+  <div class="scores-table-wrap">
+    <div class="table-title">完整受惠強度評分表（0-5分，越高越好）</div>
+    <div class="table-scroll">
+      <table class="scores-table">
+        <thead>
+          <tr>
+            <th>公司</th><th>AI曝險</th><th>車用曝險</th><th>漲價轉嫁</th><th>供給稀缺</th><th>通路/平台</th><th>總分</th>
+          </tr>
+        </thead>
+        <tbody id="scoresBody">
+          <!-- Generated by JS -->
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-logo">⚡ 被動元件產業投資全指南</div>
+    <div class="footer-note">本報告採「官方與原始資料優先、中文新聞補強、查無公開資料即明示」原則。<br>市占只在有官方或高度可信公開資料時列出。本內容僅供學習研究參考，不構成投資建議。</div>
+    <div class="footer-sources">主要參考來源：YAGEO年報、Murata財報、NVIDIA/Vertiv 800VDC資料、各公司官網與法說</div>
+  </div>
+</footer>
+
+<!-- Image Modal -->
+<div class="img-modal hidden" id="imgModal" onclick="closeImg()">
+  <img id="imgModalSrc" src="" alt="" />
+  <button class="modal-close-btn" onclick="closeImg()">✕</button>
 </div>
 
 <!-- Back to top -->
