@@ -25,7 +25,7 @@
       <a href="#ai-server" class="nav-link">AI伺服器</a>
       <a href="#stocklogic" class="nav-link">股價邏輯</a>
       <a href="#companies" class="nav-link">公司圖譜</a>
-      <a href="#radar"     class="nav-link">雷達評分</a>
+      <a href="#radar"     class="nav-link">評分表</a>
     </nav>
     <div class="header-right">
       <div class="search-wrap">
@@ -51,7 +51,7 @@
       <div class="stat-card"><div class="stat-num">5大</div><div class="stat-label">推升力量</div></div>
       <div class="stat-card"><div class="stat-num">30+</div><div class="stat-label">台廠深度解析</div></div>
       <div class="stat-card"><div class="stat-num">800V</div><div class="stat-label">AI 架構升級</div></div>
-      <div class="stat-card"><div class="stat-num">46%+</div><div class="stat-label">國巨鉭電容市占</div></div>
+      <div class="stat-card"><div class="stat-num">~40%</div><div class="stat-label">國巨+KEMET鉭電容產能市占</div></div>
     </div>
     <div class="hero-chips">
       <a href="#overview"  class="chip chip-r">⚙️ 元件總覽</a>
@@ -193,8 +193,13 @@
       <div class="tier-body tier-dist">
         <div class="dist-content">
           <span class="dist-icon">🏪</span>
-          <span class="dist-main">日電貿・代理通路商</span>
-          <span class="dist-note">連接原廠與系統廠・反映庫存循環</span>
+          <span class="dist-main">日電貿（5225）</span>
+          <span class="dist-note">代理陶瓷電容 47%・固態電容 21%・高階被動件交期延至 52 週</span>
+        </div>
+        <div class="dist-content">
+          <span class="dist-icon">🏪</span>
+          <span class="dist-main">蜜望實（6482）</span>
+          <span class="dist-note">Taiyo Yuden 正規經銷商・代理 MLCC 與電感・漲價受惠庫存增值</span>
         </div>
       </div>
     </div>
@@ -217,21 +222,6 @@
     </div>
   </div>
 
-  <!-- Taiwan Key Companies -->
-  <div class="tw-companies-box">
-    <div class="tw-title">台灣重要廠商</div>
-    <div class="tw-co-row">
-      <span class="tw-co tw-platform">國巨</span>
-      <span class="tw-co tw-platform">華新科</span>
-      <span class="tw-co tw-platform">禾伸堂</span>
-      <span class="tw-co tw-ind">奇力新／台慶科</span>
-      <span class="tw-co tw-res">大毅</span>
-      <span class="tw-co tw-cap">鈺邦</span>
-      <span class="tw-co tw-cap">凱美</span>
-      <span class="tw-co tw-cap">金山電</span>
-      <span class="tw-co tw-dist">日電貿</span>
-    </div>
-  </div>
 </section>
 
 <!-- ===== 為何熱門 ===== -->
@@ -359,7 +349,7 @@
     <!-- Type comparison title -->
     <div class="type-section-title">主流電容類型比較</div>
     <div class="type-cards">
-      <div class="tc tc-1">
+      <div class="tc tc-1" data-captype="mlcc" title="點擊查看相關廠商">
         <div class="tc-num">① MLCC</div>
         <div class="tc-keyword">體積小・高頻特性佳・低ESR/ESL</div>
         <div class="tc-app">AI伺服器・手機・車用・DDR5</div>
@@ -370,7 +360,7 @@
           <div class="bar-row"><span>成本↓</span><div class="bar"><div style="width:80%" class="bf bf-cost"></div></div></div>
         </div>
       </div>
-      <div class="tc tc-2">
+      <div class="tc tc-2" data-captype="tantalum" title="點擊查看相關廠商">
         <div class="tc-num">② 鉭電容</div>
         <div class="tc-keyword">高容值・穩定性佳・體積效率高</div>
         <div class="tc-app">高可靠度電源・AI伺服器</div>
@@ -381,7 +371,7 @@
           <div class="bar-row"><span>成本↓</span><div class="bar"><div style="width:30%" class="bf bf-cost"></div></div></div>
         </div>
       </div>
-      <div class="tc tc-3">
+      <div class="tc tc-3" data-captype="aluminum" title="點擊查看相關廠商">
         <div class="tc-num">③ 鋁電解</div>
         <div class="tc-keyword">大容量・成本低・適合 bulk 儲能</div>
         <div class="tc-app">電源供應器・工控・UPS</div>
@@ -392,7 +382,7 @@
           <div class="bar-row"><span>成本↓</span><div class="bar"><div style="width:100%" class="bf bf-cost"></div></div></div>
         </div>
       </div>
-      <div class="tc tc-4">
+      <div class="tc tc-4" data-captype="film" title="點擊查看相關廠商">
         <div class="tc-num">④ 薄膜電容</div>
         <div class="tc-keyword">耐高壓・低損耗・自癒能力</div>
         <div class="tc-app">高壓電源・EV・DC-link</div>
@@ -403,7 +393,7 @@
           <div class="bar-row"><span>成本↓</span><div class="bar"><div style="width:40%" class="bf bf-cost"></div></div></div>
         </div>
       </div>
-      <div class="tc tc-5">
+      <div class="tc tc-5" data-captype="super" title="點擊查看相關廠商">
         <div class="tc-num">⑤ 超級電容</div>
         <div class="tc-keyword">快速充放電・高功率密度・循環壽命長</div>
         <div class="tc-app">備援・短時儲能・啟停</div>
@@ -455,32 +445,32 @@
       <div class="rtt-header">
         <div>類型</div><div>特性</div><div>主要應用</div>
       </div>
-      <div class="rtt-row rtt-odd">
+      <div class="rtt-row rtt-odd" data-restype="thick" title="點擊查看相關廠商">
         <div class="rtt-name"><span class="rtt-num">①</span>厚膜電阻</div>
         <div class="rtt-spec">成本低・量大・耐突波</div>
         <div class="rtt-app">一般電子・電源</div>
       </div>
-      <div class="rtt-row">
+      <div class="rtt-row" data-restype="thin" title="點擊查看相關廠商">
         <div class="rtt-name"><span class="rtt-num">②</span>薄膜電阻</div>
         <div class="rtt-spec">高精度・低溫漂・低雜訊</div>
         <div class="rtt-app">精密量測・醫療・航太</div>
       </div>
-      <div class="rtt-row rtt-odd">
+      <div class="rtt-row rtt-odd" data-restype="metal" title="點擊查看相關廠商">
         <div class="rtt-name"><span class="rtt-num">③</span>金屬膜電阻</div>
         <div class="rtt-spec">高穩定性・低雜訊</div>
         <div class="rtt-app">音訊・訊號處理</div>
       </div>
-      <div class="rtt-row">
+      <div class="rtt-row" data-restype="oxide" title="點擊查看相關廠商">
         <div class="rtt-name"><span class="rtt-num">④</span>金屬氧化膜電阻</div>
         <div class="rtt-spec">耐高溫・耐濕・耐脈衝</div>
         <div class="rtt-app">戶外設備・電源</div>
       </div>
-      <div class="rtt-row rtt-odd">
+      <div class="rtt-row rtt-odd" data-restype="wire" title="點擊查看相關廠商">
         <div class="rtt-name"><span class="rtt-num">⑤</span>繞線電阻</div>
         <div class="rtt-spec">高功率・精度高・耐高溫</div>
         <div class="rtt-app">工業・大電流・煞車/負載</div>
       </div>
-      <div class="rtt-row rtt-highlight">
+      <div class="rtt-row rtt-highlight" data-restype="shunt" title="點擊查看相關廠商">
         <div class="rtt-name"><span class="rtt-num">⑥</span>分流／電流感測電阻 ⭐</div>
         <div class="rtt-spec">低阻值・高精度・用於 current sensing</div>
         <div class="rtt-app"><strong>AI伺服器電源・EV・PMIC</strong></div>
@@ -519,37 +509,37 @@
 
     <div class="type-section-title">主要電感類型與應用</div>
     <div class="ind-type-grid">
-      <div class="itg-item">
+      <div class="itg-item" data-indtype="power" title="點擊查看相關廠商">
         <div class="itg-num">①</div>
         <div class="itg-name">功率電感</div>
         <div class="itg-spec">DC-DC 核心元件・高電流・低DCR</div>
         <div class="itg-app">伺服器・EV</div>
       </div>
-      <div class="itg-item">
+      <div class="itg-item" data-indtype="molded" title="點擊查看相關廠商">
         <div class="itg-num">②</div>
         <div class="itg-name">一體成型電感</div>
         <div class="itg-spec">體積小・漏磁低・EMI 佳</div>
         <div class="itg-app">高密度電源模組</div>
       </div>
-      <div class="itg-item">
+      <div class="itg-item" data-indtype="hf" title="點擊查看相關廠商">
         <div class="itg-num">③</div>
         <div class="itg-name">高頻電感</div>
         <div class="itg-spec">低損耗・適合 GHz 訊號</div>
         <div class="itg-app">通訊・RF 模組</div>
       </div>
-      <div class="itg-item">
+      <div class="itg-item" data-indtype="common" title="點擊查看相關廠商">
         <div class="itg-num">④</div>
         <div class="itg-name">共模電感</div>
         <div class="itg-spec">抑制共模雜訊</div>
         <div class="itg-app">介面・網通・電源入端</div>
       </div>
-      <div class="itg-item itg-star">
+      <div class="itg-item itg-star" data-indtype="tlvr" title="點擊查看相關廠商">
         <div class="itg-num">⑤ ⭐</div>
         <div class="itg-name">TLVR 電感</div>
         <div class="itg-spec">反應快・降低 voltage droop</div>
         <div class="itg-app"><strong>AI GPU／CPU 供電</strong></div>
       </div>
-      <div class="itg-item">
+      <div class="itg-item" data-indtype="bead" title="點擊查看相關廠商">
         <div class="itg-num">⑥</div>
         <div class="itg-name">磁珠</div>
         <div class="itg-spec">抑制高頻 EMI・體積小</div>
@@ -816,27 +806,20 @@
     <button class="ftab" data-filter="prot">🛡️ 保護元件</button>
     <button class="ftab" data-filter="upstream">🏭 上游材料</button>
     <button class="ftab" data-filter="dist">🏪 通路</button>
+    <button class="ftab ftab-kw" data-filter="kw:MLCC">🟦 MLCC</button>
+    <button class="ftab ftab-kw" data-filter="kw:TLVR">⚡ TLVR</button>
   </div>
 
   <div class="company-cards" id="companyCards"></div>
 </section>
 
-<!-- ===== 雷達圖 ===== -->
+
+<!-- ===== 評分表 ===== -->
 <section class="content-section" id="radar">
   <div class="section-header">
     <div class="section-tag tag-purple">受惠強度分析</div>
-    <h2>公司受惠強度雷達圖</h2>
-    <p>AI曝險・車用曝險・漲價轉嫁・供給稀缺・通路/平台優勢 — 5 維度評分（0-5 分）</p>
-  </div>
-
-  <div class="radar-layout">
-    <div class="radar-selector">
-      <div class="rs-title">選擇公司（最多8家）</div>
-      <div class="rs-grid" id="radarSelector"></div>
-    </div>
-    <div class="radar-chart-wrap">
-      <canvas id="radarChart"></canvas>
-    </div>
+    <h2>公司受惠強度評分表</h2>
+    <p>AI 受惠度・車用受惠度・漲價能力・供給稀缺度・通路優勢 — 5 維度評分（0-5 分，分數越高代表該維度越受惠）</p>
   </div>
 
   <div class="scores-table-wrap">
@@ -844,12 +827,12 @@
     <div class="table-scroll">
       <table class="scores-table">
         <thead>
-          <tr><th>公司</th><th>AI曝險</th><th>車用曝險</th><th>漲價轉嫁</th><th>供給稀缺</th><th>通路/平台</th><th>總分</th></tr>
+          <tr><th>公司</th><th>AI 受惠度</th><th>車用受惠度</th><th>漲價能力</th><th>供給稀缺度</th><th>平台規模</th><th>總分</th></tr>
         </thead>
         <tbody id="scoresBody"></tbody>
       </table>
     </div>
-    <div class="scores-note">※ 評分依公開產品線、AI/車用曝險、價格轉嫁能力、供應稀缺度與通路槓桿推估，僅供參考，不構成投資建議。</div>
+    <div class="scores-note">※ 評分依公開產品線、AI/車用受惠程度、價格轉嫁能力、供應稀缺度與通路槓桿推估，僅供參考，不構成投資建議。</div>
   </div>
 </section>
 
@@ -863,6 +846,18 @@
 </footer>
 
 <button class="back-to-top" id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<!-- ===== 電容類型廠商 Modal ===== -->
+<div class="cap-modal-overlay" id="capModalOverlay">
+  <div class="cap-modal">
+    <div class="cap-modal-header">
+      <div class="cap-modal-title" id="capModalTitle"></div>
+      <button class="cap-modal-close" id="capModalClose">✕</button>
+    </div>
+    <div class="cap-modal-body" id="capModalBody"></div>
+  </div>
+</div>
+
 <script src="assets/js/main.js"></script>
 </body>
 </html>

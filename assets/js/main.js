@@ -4,7 +4,7 @@
 const COMPANIES = [
   { name:'國巨', ticker:'2327', group:'platform', groupLabel:'綜合平台',
     products:'MLCC、鉭電容、晶片電阻、磁性元件、感測器',
-    catalyst:'2026/4 合併營收創單月新高；鉭電容全球市占逾46%',
+    catalyst:'2026/4 合併營收創單月新高；併購KEMET後鉭電容全球產能市占約40%+（最大供應商）',
     ai:5, car:4, price:5, scarce:5, platform:5, color:'#5b6ef5' },
   { name:'華新科', ticker:'2492', group:'platform', groupLabel:'綜合平台',
     products:'陶瓷電容、晶片電阻、電感、RF濾波器、天線',
@@ -18,11 +18,11 @@ const COMPANIES = [
     products:'特殊MLCC、電阻、電感、壓敏/熱敏電阻、介電瓷粉',
     catalyst:'AI交期拉長至16週+；訂單能見度超6個月；新瓷粉廠+50%產能',
     ai:5, car:4, price:4, scarce:5, platform:4, color:'#c0392b' },
-  { name:'光頡', ticker:'5209', group:'res', groupLabel:'電阻',
+  { name:'光頡', ticker:'3624', group:'res', groupLabel:'電阻',
     products:'薄膜精密電阻、厚膜電阻、電流感測電阻、MLCC、RF/功率電感',
-    catalyst:'AI比重升至12%；已漲價30-35%；高頻電感送樣SpaceX',
+    catalyst:'AI伺服器電流感測電阻需求帶動；薄膜電阻與MLCC漲價；切入高頻電感應用',
     ai:4, car:5, price:4, scarce:4, platform:3, color:'#e67e22' },
-  { name:'天二科技', ticker:'3592', group:'res', groupLabel:'電阻',
+  { name:'天二科技', ticker:'6834', group:'res', groupLabel:'電阻',
     products:'晶片電阻、排阻、Metal Strip電阻',
     catalyst:'電阻產業漲價跟進；IATF 16949車規認證',
     ai:3, car:3, price:3, scarce:2, platform:1, color:'#d35400' },
@@ -40,7 +40,7 @@ const COMPANIES = [
     ai:3, car:2, price:3, scarce:2, platform:2, color:'#1a5276' },
   { name:'鈺邦', ticker:'6449', group:'cap', groupLabel:'電容',
     products:'導電高分子片式固態電容、Hybrid、SMLC',
-    catalyst:'啟動擴產，全面放量；朝Rubin平台送樣',
+    catalyst:'啟動擴產，全面放量；朝NVIDIA B300/新平台積極送樣',
     ai:5, car:2, price:4, scarce:4, platform:2, color:'#0288d1' },
   { name:'臺慶科', ticker:'3357', group:'ind', groupLabel:'電感/磁材',
     products:'磁性材料、電感元件、TLVR電感',
@@ -50,7 +50,7 @@ const COMPANIES = [
     products:'EMI/EMC鐵氧體、電感器、共模抗流圈、功率電感',
     catalyst:'對部分客戶調價；高頻電感接單能見度提升',
     ai:4, car:4, price:4, scarce:3, platform:2, color:'#7d3c98' },
-  { name:'千如', ticker:'5215', group:'ind', groupLabel:'電感/磁材',
+  { name:'千如', ticker:'3236', group:'ind', groupLabel:'電感/磁材',
     products:'車規電感、TLVR、共模濾波、LTCC、變壓器',
     catalyst:'2026年推出大電流磁珠、雙線圈TLVR新品',
     ai:4, car:4, price:3, scarce:3, platform:2, color:'#6c3483' },
@@ -118,7 +118,7 @@ const COMPANIES = [
     products:'代理陶瓷電容(47%)、固態電容(21%)、電解電容(10%)等',
     catalyst:'2026Q1獲利成長；部分高階被動件交期延長至52週',
     ai:4, car:4, price:4, scarce:3, platform:5, color:'#f39c12' },
-  { name:'蜜望實', ticker:'6482', group:'dist', groupLabel:'通路',
+  { name:'蜜望實', ticker:'8043', group:'dist', groupLabel:'通路',
     products:'MLCC、電感代理（Taiyo Yuden正規經銷商）',
     catalyst:'Taiyo Yuden 2026年起漲價，通路議價與庫存價值提高',
     ai:3, car:3, price:3, scarce:2, platform:4, color:'#e67e22' },
@@ -166,7 +166,7 @@ const IDX = [
   { id:'ai-server',  title:'AI伺服器被動元件', kw:'PSU VRM GPU TLVR DDR5 800VDC' },
   { id:'stocklogic', title:'股價上漲邏輯', kw:'催化 獲利 ASP 毛利 電容 電阻 電感 代理商' },
   { id:'companies',  title:'公司圖譜', kw:'國巨 華新科 禾伸堂 光頡 鈺邦 立隆電 臺慶科 日電貿' },
-  { id:'radar',      title:'受惠強度雷達圖', kw:'雷達 評分 AI曝險 車用' },
+  { id:'radar',      title:'受惠強度雷達圖', kw:'雷達 評分 AI受惠度 車用受惠度' },
   ...COMPANIES.map(c => ({ id:'companies', title:c.name + ' ' + c.ticker, kw:c.products + ' ' + c.catalyst })),
 ];
 
@@ -198,9 +198,12 @@ document.querySelectorAll('.rcl-tab').forEach(btn => {
 function renderCards(filter = 'all') {
   const c = document.getElementById('companyCards');
   c.innerHTML = '';
-  (filter === 'all' ? COMPANIES : COMPANIES.filter(x => x.group === filter)).forEach(co => {
+  const list = filter === 'all' ? COMPANIES
+    : filter.startsWith('kw:') ? COMPANIES.filter(x => (x.products + ' ' + x.catalyst).includes(filter.slice(3)))
+    : COMPANIES.filter(x => x.group === filter);
+  list.forEach(co => {
     const scores = [
-      { l:'AI曝險', v:co.ai }, { l:'車用', v:co.car },
+      { l:'AI受惠', v:co.ai }, { l:'車用受惠', v:co.car },
       { l:'漲價', v:co.price }, { l:'稀缺', v:co.scarce }, { l:'通路', v:co.platform },
     ];
     const div = document.createElement('div');
@@ -230,60 +233,134 @@ document.querySelectorAll('.ftab').forEach(btn => {
 });
 renderCards();
 
-/* ===== RADAR ===== */
-const TOP = COMPANIES.slice(0, 12);
-let selected = new Set([0, 2, 3, 4, 10]);
-let chart = null;
-
-function buildSelector() {
-  const grid = document.getElementById('radarSelector');
-  TOP.forEach((c, i) => {
-    const el = document.createElement('div');
-    el.className = 'rs-item' + (selected.has(i) ? ' selected' : '');
-    el.innerHTML = `<div class="rs-dot" style="background:${CHART_COLORS[i]}"></div>${c.name}`;
-    el.addEventListener('click', () => {
-      if (selected.has(i)) { if (selected.size <= 1) return; selected.delete(i); el.classList.remove('selected'); }
-      else { if (selected.size >= 8) return; selected.add(i); el.classList.add('selected'); }
-      updateChart();
-    });
-    grid.appendChild(el);
-  });
-}
-
-function getDatasets() {
-  return Array.from(selected).map(i => {
-    const c = TOP[i], col = CHART_COLORS[i];
-    return { label:c.name, data:[c.ai,c.car,c.price,c.scarce,c.platform],
-      backgroundColor:col+'22', borderColor:col, pointBackgroundColor:col, borderWidth:2, pointRadius:4 };
-  });
-}
-
-function buildChart() {
-  const ctx = document.getElementById('radarChart').getContext('2d');
-  chart = new Chart(ctx, {
-    type:'radar',
-    data:{ labels:['AI曝險','車用曝險','漲價轉嫁','供給稀缺','通路/平台'], datasets:getDatasets() },
-    options:{
-      responsive:true,
-      scales:{ r:{ min:0, max:5, ticks:{ stepSize:1, font:{size:10} }, pointLabels:{ font:{size:12,weight:'700'} }, grid:{color:'rgba(0,0,0,.08)'} } },
-      plugins:{ legend:{ position:'bottom', labels:{ font:{size:11} } } }
-    }
-  });
-}
-function updateChart() { if (!chart) return; chart.data.datasets = getDatasets(); chart.update(); }
-
 function buildScoresTable() {
   const tbody = document.getElementById('scoresBody');
   [...COMPANIES].sort((a,b) => (b.ai+b.car+b.price+b.scarce+b.platform)-(a.ai+a.car+a.price+a.scarce+a.platform))
     .forEach(c => {
       const t = c.ai+c.car+c.price+c.scarce+c.platform;
-      const sc = v => `<span class="score-cell s${v}">${v}</span>`;
+      const sc = v => `<td><span class="score-cell s${v}">${v}</span></td>`;
       const tr = document.createElement('tr');
       tr.innerHTML = `<td style="text-align:left"><strong>${c.name}</strong><br><span style="font-size:.7rem;color:#999">${c.groupLabel}</span></td>${[c.ai,c.car,c.price,c.scarce,c.platform].map(sc).join('')}<td><span class="total-cell">${t}</span></td>`;
       tbody.appendChild(tr);
     });
 }
 
-buildSelector();
 buildScoresTable();
-setTimeout(buildChart, 100);
+
+/* ===== CAPACITOR TYPE MODAL ===== */
+const CAP_TYPE_MAP = {
+  mlcc:     { label:'① MLCC 相關廠商',     fn: c => /MLCC|陶瓷電容/.test(c.products) },
+  tantalum: { label:'② 鉭電容 相關廠商',   fn: c => /鉭電容|鉭/.test(c.products) },
+  aluminum: { label:'③ 鋁電解 相關廠商',   fn: c => /鋁電解|鋁質電解|電解電容/.test(c.products) },
+  film:     { label:'④ 薄膜電容 相關廠商',  fn: c => /薄膜電容/.test(c.products + c.catalyst) },
+  super:    { label:'⑤ 超級電容 相關廠商',  fn: c => /EDLC|超級電容/.test(c.products) },
+};
+
+const capOverlay = document.getElementById('capModalOverlay');
+const capTitle   = document.getElementById('capModalTitle');
+const capBody    = document.getElementById('capModalBody');
+
+function openCapModal(type) {
+  const cfg = CAP_TYPE_MAP[type];
+  if (!cfg) return;
+  const list = COMPANIES.filter(cfg.fn);
+  capTitle.textContent = cfg.label;
+  if (list.length === 0) {
+    capBody.innerHTML = '<p style="color:var(--muted);padding:16px">目前資料庫中無台灣上市廠商直接生產此類型，主要由 TDK、KEMET、Vishay 等國際廠供應。</p>';
+  } else {
+    capBody.innerHTML = list.map(co => `
+      <div class="cap-co-row" style="border-left:4px solid ${co.color}">
+        <div class="cap-co-top">
+          <span class="cap-co-name">${co.name}</span>
+          <span class="cap-co-ticker">${co.ticker}</span>
+          <span class="cap-co-badge" style="background:${co.color}22;color:${co.color}">${co.groupLabel}</span>
+        </div>
+        <div class="cap-co-products">${co.products}</div>
+        <div class="cap-co-catalyst">⚡ ${co.catalyst}</div>
+      </div>`).join('');
+  }
+  capOverlay.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+document.getElementById('capModalClose').addEventListener('click', closeCapModal);
+capOverlay.addEventListener('click', e => { if (e.target === capOverlay) closeCapModal(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeCapModal(); });
+
+function closeCapModal() {
+  capOverlay.classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+document.querySelectorAll('.tc[data-captype]').forEach(card => {
+  card.style.cursor = 'pointer';
+  card.addEventListener('click', () => openCapModal(card.dataset.captype));
+});
+
+/* ===== RESISTOR TYPE MODAL ===== */
+const RES_TYPE_MAP = {
+  thick:  { label:'① 厚膜電阻 相關廠商',        fn: c => /晶片電阻|厚膜電阻|排阻/.test(c.products) },
+  thin:   { label:'② 薄膜電阻 相關廠商',        fn: c => /薄膜精密電阻|薄膜電阻/.test(c.products) },
+  metal:  { label:'③ 金屬膜電阻 相關廠商',      fn: c => /金屬膜/.test(c.products) },
+  oxide:  { label:'④ 金屬氧化膜電阻 相關廠商',  fn: c => /金屬氧化/.test(c.products) },
+  wire:   { label:'⑤ 繞線電阻 相關廠商',        fn: c => /繞線/.test(c.products) },
+  shunt:  { label:'⑥ 電流感測電阻 相關廠商',    fn: c => /電流感測電阻|Metal Strip/.test(c.products) },
+};
+
+document.querySelectorAll('.rtt-row[data-restype]').forEach(row => {
+  row.style.cursor = 'pointer';
+  row.addEventListener('click', () => {
+    const cfg = RES_TYPE_MAP[row.dataset.restype];
+    if (!cfg) return;
+    const list = COMPANIES.filter(cfg.fn);
+    capTitle.textContent = cfg.label;
+    capBody.innerHTML = list.length === 0
+      ? '<p style="color:var(--muted);padding:16px">資料庫中無台灣上市廠商直接主打此類型，主要由 Vishay、Yageo（國際線）、Panasonic 等供應。</p>'
+      : list.map(co => `
+        <div class="cap-co-row" style="border-left:4px solid ${co.color}">
+          <div class="cap-co-top">
+            <span class="cap-co-name">${co.name}</span>
+            <span class="cap-co-ticker">${co.ticker}</span>
+            <span class="cap-co-badge" style="background:${co.color}22;color:${co.color}">${co.groupLabel}</span>
+          </div>
+          <div class="cap-co-products">${co.products}</div>
+          <div class="cap-co-catalyst">⚡ ${co.catalyst}</div>
+        </div>`).join('');
+    capOverlay.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  });
+});
+
+/* ===== INDUCTOR TYPE MODAL ===== */
+const IND_TYPE_MAP = {
+  power:  { label:'① 功率電感 相關廠商',   fn: c => /功率電感|Power Inductor|電感元件/.test(c.products) },
+  molded: { label:'② 一體成型電感 相關廠商', fn: c => /一體成型|模壓電感/.test(c.products + c.catalyst) },
+  hf:     { label:'③ 高頻電感 相關廠商',   fn: c => /高頻電感|RF.*電感|積層式晶片電感/.test(c.products) },
+  common: { label:'④ 共模電感 相關廠商',   fn: c => /共模/.test(c.products) },
+  tlvr:   { label:'⑤ TLVR 電感 相關廠商', fn: c => /TLVR/.test(c.products) },
+  bead:   { label:'⑥ 磁珠 相關廠商',      fn: c => /磁珠|鐵氧體/.test(c.products) },
+};
+
+document.querySelectorAll('.itg-item[data-indtype]').forEach(item => {
+  item.style.cursor = 'pointer';
+  item.addEventListener('click', () => {
+    const cfg = IND_TYPE_MAP[item.dataset.indtype];
+    if (!cfg) return;
+    const list = COMPANIES.filter(cfg.fn);
+    capTitle.textContent = cfg.label;
+    capBody.innerHTML = list.length === 0
+      ? '<p style="color:var(--muted);padding:16px">資料庫中無台灣上市廠商直接主打此類型，主要由 TDK、Murata、Vishay 等國際廠供應。</p>'
+      : list.map(co => `
+        <div class="cap-co-row" style="border-left:4px solid ${co.color}">
+          <div class="cap-co-top">
+            <span class="cap-co-name">${co.name}</span>
+            <span class="cap-co-ticker">${co.ticker}</span>
+            <span class="cap-co-badge" style="background:${co.color}22;color:${co.color}">${co.groupLabel}</span>
+          </div>
+          <div class="cap-co-products">${co.products}</div>
+          <div class="cap-co-catalyst">⚡ ${co.catalyst}</div>
+        </div>`).join('');
+    capOverlay.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  });
+});
