@@ -119,7 +119,7 @@ const COMPANIES = [
     catalyst:'AI料件交期3-4個月+；缺口達5-10倍；自2022起提前布局備貨；CSP漲價已普遍接受',
     ai:4, car:4, price:4, scarce:3, platform:5, color:'#f39c12' },
   { name:'蜜望實', ticker:'8043', group:'dist', groupLabel:'通路',
-    products:'MLCC、電感元件、磁珠、薄膜電阻、電感代理（Taiyo Yuden正規經銷商）',
+    products:'MLCC、電感元件、磁珠、電感代理（Taiyo Yuden正規經銷商）',
     catalyst:'Taiyo Yuden 2026年起漲價，通路議價與庫存價值提高',
     ai:3, car:3, price:3, scarce:2, platform:4, color:'#e67e22' },
 ];
