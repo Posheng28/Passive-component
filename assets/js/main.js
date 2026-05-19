@@ -2,11 +2,11 @@
 
 /* ===== DATA ===== */
 const COMPANIES = [
-  { name:'國巨', ticker:'2327', groups:['platform','cap','res','ind'], groupLabel:'綜合平台',
+  { name:'國巨', ticker:'2327', groups:['cap','res','ind'], groupLabel:'綜合平台',
     products:'MLCC、鉭電容、薄膜電容、晶片電阻、薄膜電阻、電流感測電阻、功率電感、共模電感、磁性元件、感測器',
     catalyst:'2026/4 合併營收創單月新高；併購KEMET後鉭電容全球產能市占約40%+（最大供應商）；併購Pulse Electronics取得功率電感與共模電感產線',
     ai:5, car:4, price:5, scarce:5, platform:5, color:'#5b6ef5' },
-  { name:'華新科', ticker:'2492', groups:['platform','cap','res','ind'], groupLabel:'綜合平台',
+  { name:'華新科', ticker:'2492', groups:['cap','res','ind'], groupLabel:'綜合平台',
     products:'陶瓷電容、晶片電阻、高頻電感、RF濾波器、天線',
     catalyst:'AI相關營收約10%；中高壓MLCC、安規電容與特殊電阻',
     ai:4, car:4, price:4, scarce:4, platform:4, color:'#4355e8' },
@@ -128,6 +128,11 @@ const COMPANIES = [
     ai:3, car:3, price:3, scarce:2, platform:4, color:'#e67e22' },
 ];
 
+const GROUP_LABELS = {
+  cap:'電容', res:'電阻', ind:'電感/磁材',
+  freq:'頻率/RF', prot:'保護元件', upstream:'上游材料', dist:'通路',
+};
+
 const CHART_COLORS = [
   '#5b6ef5','#e74c3c','#27ae60','#f39c12','#9b59b6',
   '#00bcd4','#e67e22','#3498db','#c0392b','#1abc9c','#8e44ad','#d35400'
@@ -215,7 +220,7 @@ function renderCards(filter = 'all') {
     div.innerHTML = `
       <div class="co-header">
         <div><div class="co-name">${co.name}</div><div class="co-ticker">${co.ticker}</div></div>
-        <span class="co-badge" style="background:${co.color}22;color:${co.color};border:1px solid ${co.color}44">${co.groupLabel}</span>
+        <div class="co-badges">${co.groups.map(g => `<span class="co-badge" style="background:${co.color}22;color:${co.color};border:1px solid ${co.color}44">${GROUP_LABELS[g]||g}</span>`).join('')}</div>
       </div>
       <div class="co-products">${co.products}</div>
       <div class="co-catalyst">⚡ ${co.catalyst}</div>
@@ -244,7 +249,7 @@ function buildScoresTable() {
       const t = c.ai+c.car+c.price+c.scarce+c.platform;
       const sc = v => `<td><span class="score-cell s${v}">${v}</span></td>`;
       const tr = document.createElement('tr');
-      tr.innerHTML = `<td style="text-align:left"><strong>${c.name}</strong><br><span style="font-size:.7rem;color:#999">${c.groupLabel}</span></td>${[c.ai,c.car,c.price,c.scarce,c.platform].map(sc).join('')}<td><span class="total-cell">${t}</span></td>`;
+      tr.innerHTML = `<td style="text-align:left"><strong>${c.name}</strong><br><span style="font-size:.7rem;color:#999">${c.groups.map(g=>GROUP_LABELS[g]||g).join('/')}</span></td>${[c.ai,c.car,c.price,c.scarce,c.platform].map(sc).join('')}<td><span class="total-cell">${t}</span></td>`;
       tbody.appendChild(tr);
     });
 }
@@ -448,7 +453,7 @@ function openCapModal(type) {
         <div class="cap-co-top">
           <span class="cap-co-name">${co.name}</span>
           <span class="cap-co-ticker">${co.ticker}</span>
-          <span class="cap-co-badge" style="background:${co.color}22;color:${co.color}">${co.groupLabel}</span>
+          <span class="cap-co-badge" style="background:${co.color}22;color:${co.color}">${co.groups.map(g=>GROUP_LABELS[g]||g).join('/')}</span>
         </div>
         <div class="cap-co-products">${co.products}</div>
         <div class="cap-co-catalyst">⚡ ${co.catalyst}</div>
@@ -496,7 +501,7 @@ document.querySelectorAll('.rtt-row[data-restype]').forEach(row => {
           <div class="cap-co-top">
             <span class="cap-co-name">${co.name}</span>
             <span class="cap-co-ticker">${co.ticker}</span>
-            <span class="cap-co-badge" style="background:${co.color}22;color:${co.color}">${co.groupLabel}</span>
+            <span class="cap-co-badge" style="background:${co.color}22;color:${co.color}">${co.groups.map(g=>GROUP_LABELS[g]||g).join('/')}</span>
           </div>
           <div class="cap-co-products">${co.products}</div>
           <div class="cap-co-catalyst">⚡ ${co.catalyst}</div>
@@ -530,7 +535,7 @@ document.querySelectorAll('.itg-item[data-indtype]').forEach(item => {
           <div class="cap-co-top">
             <span class="cap-co-name">${co.name}</span>
             <span class="cap-co-ticker">${co.ticker}</span>
-            <span class="cap-co-badge" style="background:${co.color}22;color:${co.color}">${co.groupLabel}</span>
+            <span class="cap-co-badge" style="background:${co.color}22;color:${co.color}">${co.groups.map(g=>GROUP_LABELS[g]||g).join('/')}</span>
           </div>
           <div class="cap-co-products">${co.products}</div>
           <div class="cap-co-catalyst">⚡ ${co.catalyst}</div>
