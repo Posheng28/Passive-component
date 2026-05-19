@@ -1027,54 +1027,245 @@
   <div class="section-header">
     <div class="section-tag tag-gold">財務分析</div>
     <h2>獲利推算模型</h2>
-    <p>以國巨（2327）為範例　調整假設參數，即時看獲利與目標股價變化</p>
+    <p>輸入任意公司財務數據，套用四種主流估值方法即時計算目標股價</p>
   </div>
 
-  <!-- 方法論說明 -->
-  <div class="model-method">
-    <div class="mm-title">📐 模型架構與建法（參考 Citi / HSBC 報告邏輯）</div>
-    <div class="mm-grid">
-      <div class="mm-step">
-        <div class="mm-num">①</div>
-        <div class="mm-name">營收</div>
-        <div class="mm-desc">基期 × (1 + 成長率)<br><span class="mm-key">關鍵驅動：出貨量成長 + ASP 漲價幅度</span></div>
+  <!-- 四法說明 -->
+  <div class="vmi-section">
+    <div class="vmi-title">📚 分析師常用四種估值方法</div>
+    <div class="vmi-grid">
+      <div class="vmi-card">
+        <div class="vmi-badge badge-pe">PE 法</div>
+        <div class="vmi-name">本益比法</div>
+        <div class="vmi-formula">目標價 = EPS × PE 倍數</div>
+        <div class="vmi-desc">最普遍用法。分析師預估未來年度 EPS，乘以認為合理的本益比倍數得出目標股價。PE 倍數反映市場對成長性與確定性的預期。台灣被動元件歷史 PE 約 <strong>15–30x</strong>，AI 需求溢價可達 35x+。需要輸入：<em>基期營收、成長率、毛利率、費用率、業外、稅率、股數</em>。</div>
+        <div class="vmi-cite">Citi 給國巨：23x 2026E EPS／HSBC：25x 2027E EPS</div>
       </div>
-      <div class="mm-arrow">→</div>
-      <div class="mm-step">
-        <div class="mm-num">②</div>
-        <div class="mm-name">毛利</div>
-        <div class="mm-desc">營收 × 毛利率<br><span class="mm-key">驅動：產品組合（AI高階 &gt; 標準品）、稼動率、ASP</span></div>
+      <div class="vmi-card">
+        <div class="vmi-badge badge-peg">PEG 法</div>
+        <div class="vmi-name">本益比成長率法</div>
+        <div class="vmi-formula">公允 PE = EPS 年成長率(%) × PEG 目標值</div>
+        <div class="vmi-desc">解決「景氣底部 PE 虛高」問題。當公司 EPS 快速成長時，以成長率調整 PE 更客觀。<strong>PEG &lt; 1.0</strong> 視為低估，<strong>&gt; 2.0</strong> 偏貴。需額外輸入：<em>前一年 EPS（計算成長率）</em>。適合被動元件上行週期使用。</div>
+        <div class="vmi-cite">例：EPS成長 40% × PEG 1.2 → 公允PE = 48x；Yageo Murata PE ~22–47x</div>
       </div>
-      <div class="mm-arrow">→</div>
-      <div class="mm-step">
-        <div class="mm-num">③</div>
-        <div class="mm-name">營業利益</div>
-        <div class="mm-desc">毛利 − 營業費用<br><span class="mm-key">OPEX 相對固定（~12–13% 營收）</span></div>
+      <div class="vmi-card">
+        <div class="vmi-badge badge-ev">EV/EBITDA</div>
+        <div class="vmi-name">企業價值法</div>
+        <div class="vmi-formula">股價 = (EBITDA × 倍數 − 淨負債) ÷ 股數</div>
+        <div class="vmi-desc">不受稅率、折舊政策影響，適合<strong>跨國比較</strong>（TDK、Murata、Vishay）。EBITDA = 營業利益 + 折舊攤提（約 2–5% 營收）。淨負債為負值代表淨現金。需額外輸入：<em>折舊攤提率、淨負債</em>。</div>
+        <div class="vmi-cite">台灣被動元件：12–18x；日韓大廠（Murata、TDK）溢價 20–30x</div>
       </div>
-      <div class="mm-arrow">→</div>
-      <div class="mm-step">
-        <div class="mm-num">④</div>
-        <div class="mm-name">稅後淨利</div>
-        <div class="mm-desc">（營業利益 + 業外）× (1 − 稅率)<br><span class="mm-key">稅率約 22–23%；業外以利息收入為主</span></div>
+      <div class="vmi-card">
+        <div class="vmi-badge badge-div">殖利率法</div>
+        <div class="vmi-name">現金殖利率法</div>
+        <div class="vmi-formula">股價 = DPS ÷ 目標殖利率</div>
+        <div class="vmi-desc">適合<strong>配息穩定、現金流充裕</strong>的成熟公司。以市場接受的合理殖利率反推股價。注意：高成長期公司配息少，本法可能低估股價，建議搭配 PE 法交叉驗證。需輸入：<em>每股股息 DPS</em>。</div>
+        <div class="vmi-cite">被動元件歷史殖利率：2–4%；國巨近年 DPS：5–8元</div>
       </div>
-      <div class="mm-arrow">→</div>
-      <div class="mm-step">
-        <div class="mm-num">⑤</div>
-        <div class="mm-name">EPS / 目標價</div>
-        <div class="mm-desc">淨利 ÷ 流通股數<br><span class="mm-key">目標價 = EPS × 本益比（PE）</span></div>
-      </div>
-    </div>
-    <div class="mm-note">
-      ⚠️ 需要哪些數值？<br>
-      <strong>基期營收</strong>（年報）・<strong>毛利率</strong>（法說會 / 財報）・<strong>OPEX 比率</strong>（財報）・<strong>業外收支</strong>（財報）・<strong>稅率</strong>（財報）・<strong>流通股數</strong>（年報）・<strong>市場 PE 共識</strong>（Bloomberg / 法人報告）
     </div>
   </div>
 
-  <!-- Citi vs HSBC 對照 -->
-  <div class="est-compare">
+  <!-- 公司資料輸入 -->
+  <div class="model-card">
+    <div class="model-card-title">🏢 輸入公司基本財務數據</div>
+    <div class="preset-bar">
+      <span class="preset-label">快速套入預設：</span>
+      <button class="preset-btn active" data-preset="yageo">國巨 2327（含法人參考）</button>
+      <button class="preset-btn" data-preset="blank">✏️ 自行輸入</button>
+    </div>
+    <div class="model-base-grid">
+      <div class="mb-field">
+        <label class="mb-label">公司名稱</label>
+        <input type="text" class="mb-input" id="m-name" placeholder="例：國巨" value="國巨">
+      </div>
+      <div class="mb-field">
+        <label class="mb-label">股票代號</label>
+        <input type="text" class="mb-input" id="m-ticker" placeholder="例：2327" value="2327">
+      </div>
+      <div class="mb-field">
+        <label class="mb-label">基期營收（億元）<span class="mb-hint">最近完整年度年報</span></label>
+        <input type="number" class="mb-input" id="m-baserev" value="1329" min="0" step="1">
+      </div>
+      <div class="mb-field">
+        <label class="mb-label">流通股數（百萬股）<span class="mb-hint">年報 / 公開資訊</span></label>
+        <input type="number" class="mb-input" id="m-shares" value="2053" min="1" step="1">
+      </div>
+      <div class="mb-field">
+        <label class="mb-label">業外淨收入（億元）<span class="mb-hint">利息收入 ± 匯損</span></label>
+        <input type="number" class="mb-input" id="m-nonop" value="15.7" step="0.5">
+      </div>
+      <div class="mb-field">
+        <label class="mb-label">稅率（%）<span class="mb-hint">歷史約 20–25%</span></label>
+        <input type="number" class="mb-input" id="m-tax" value="22.7" min="0" max="50" step="0.5">
+      </div>
+      <div class="mb-field">
+        <label class="mb-label">前一年 EPS（元）<span class="mb-hint">PEG 法計算成長率用</span></label>
+        <input type="number" class="mb-input" id="m-preveps" value="11.51" step="0.01">
+      </div>
+      <div class="mb-field">
+        <label class="mb-label">每股股息 DPS（元）<span class="mb-hint">殖利率法用</span></label>
+        <input type="number" class="mb-input" id="m-dps" value="5" min="0" step="0.5">
+      </div>
+      <div class="mb-field">
+        <label class="mb-label">折舊攤提率（% 營收）<span class="mb-hint">EV/EBITDA 法用，製造業約 2–5%</span></label>
+        <input type="number" class="mb-input" id="m-da" value="3.5" min="0" max="20" step="0.5">
+      </div>
+      <div class="mb-field">
+        <label class="mb-label">淨負債（億元）<span class="mb-hint">負值=淨現金；EV/EBITDA 法用</span></label>
+        <input type="number" class="mb-input" id="m-netdebt" value="-50" step="5">
+      </div>
+    </div>
+  </div>
+
+  <!-- 成長假設 -->
+  <div class="model-card">
+    <div class="model-card-title">📐 成長假設與估值倍數（Y1 / Y2）</div>
+    <div class="yr-grid">
+      <div class="yr-col">
+        <div class="yr-col-title">Y1（預估第一年）</div>
+        <div class="mi-group">
+          <label class="mi-label">① 營收成長率 <span class="mi-range" id="y1-rev-ref">Citi: 29% ／ HSBC: 35%</span></label>
+          <div class="mi-row"><input type="range" id="y1-rev" min="-20" max="80" value="29" step="1"><span class="mi-val" id="y1-rev-v">29%</span></div>
+        </div>
+        <div class="mi-group">
+          <label class="mi-label">② 毛利率 <span class="mi-range">Citi: 38.8% ／ HSBC: 39.8%</span></label>
+          <div class="mi-row"><input type="range" id="y1-gm" min="25" max="55" value="38.8" step="0.5"><span class="mi-val" id="y1-gm-v">38.8%</span></div>
+        </div>
+        <div class="mi-group">
+          <label class="mi-label">③ 營業費用率 <span class="mi-range">Citi: 12.6% ／ 2025: 13.8%</span></label>
+          <div class="mi-row"><input type="range" id="y1-opex" min="8" max="20" value="12.6" step="0.1"><span class="mi-val" id="y1-opex-v">12.6%</span></div>
+        </div>
+        <div class="mi-group">
+          <label class="mi-label">④ 目標 PE 倍數</label>
+          <div class="mi-row"><input type="range" id="y1-pe" min="10" max="45" value="23" step="1"><span class="mi-val" id="y1-pe-v">23x</span></div>
+        </div>
+        <div class="mi-group">
+          <label class="mi-label">⑤ EV/EBITDA 倍數</label>
+          <div class="mi-row"><input type="range" id="y1-ev" min="8" max="30" value="15" step="0.5"><span class="mi-val" id="y1-ev-v">15x</span></div>
+        </div>
+        <div class="mi-group">
+          <label class="mi-label">⑥ 目標殖利率</label>
+          <div class="mi-row"><input type="range" id="y1-yield" min="1" max="6" value="3" step="0.1"><span class="mi-val" id="y1-yield-v">3.0%</span></div>
+        </div>
+        <div class="mi-group">
+          <label class="mi-label">⑦ PEG 目標值 <span class="mi-range">&lt;1.0 低估 ／ &gt;2.0 偏貴</span></label>
+          <div class="mi-row"><input type="range" id="y1-peg" min="0.5" max="3" value="1.2" step="0.1"><span class="mi-val" id="y1-peg-v">1.2</span></div>
+        </div>
+      </div>
+      <div class="yr-col">
+        <div class="yr-col-title">Y2（預估第二年，以 Y1 結果為基礎）</div>
+        <div class="mi-group">
+          <label class="mi-label">① 營收成長率</label>
+          <div class="mi-row"><input type="range" id="y2-rev" min="-20" max="80" value="20" step="1"><span class="mi-val" id="y2-rev-v">20%</span></div>
+        </div>
+        <div class="mi-group">
+          <label class="mi-label">② 毛利率</label>
+          <div class="mi-row"><input type="range" id="y2-gm" min="25" max="55" value="40" step="0.5"><span class="mi-val" id="y2-gm-v">40.0%</span></div>
+        </div>
+        <div class="mi-group">
+          <label class="mi-label">③ 營業費用率</label>
+          <div class="mi-row"><input type="range" id="y2-opex" min="8" max="20" value="12" step="0.1"><span class="mi-val" id="y2-opex-v">12.0%</span></div>
+        </div>
+        <div class="mi-group">
+          <label class="mi-label">④ 目標 PE 倍數</label>
+          <div class="mi-row"><input type="range" id="y2-pe" min="10" max="45" value="23" step="1"><span class="mi-val" id="y2-pe-v">23x</span></div>
+        </div>
+        <div class="mi-group">
+          <label class="mi-label">⑤ EV/EBITDA 倍數</label>
+          <div class="mi-row"><input type="range" id="y2-ev" min="8" max="30" value="15" step="0.5"><span class="mi-val" id="y2-ev-v">15x</span></div>
+        </div>
+        <div class="mi-group">
+          <label class="mi-label">⑥ 目標殖利率</label>
+          <div class="mi-row"><input type="range" id="y2-yield" min="1" max="6" value="3" step="0.1"><span class="mi-val" id="y2-yield-v">3.0%</span></div>
+        </div>
+        <div class="mi-group">
+          <label class="mi-label">⑦ PEG 目標值</label>
+          <div class="mi-row"><input type="range" id="y2-peg" min="0.5" max="3" value="1.2" step="0.1"><span class="mi-val" id="y2-peg-v">1.2</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 估值結果 -->
+  <div class="val-results">
+    <div class="val-results-title">📊 <span id="vr-name">國巨</span> 目標股價推算結果</div>
+    <div class="vr-grid">
+      <div class="vr-card">
+        <div class="vr-badge badge-pe">PE 法</div>
+        <div class="vr-method">本益比法</div>
+        <div class="vr-cols">
+          <div class="vr-yr">
+            <div class="vr-yr-label">Y1 目標價</div>
+            <div class="vr-price" id="r-pe-y1">—</div>
+            <div class="vr-detail" id="r-pe-y1-detail">—</div>
+          </div>
+          <div class="vr-yr">
+            <div class="vr-yr-label">Y2 目標價</div>
+            <div class="vr-price" id="r-pe-y2">—</div>
+            <div class="vr-detail" id="r-pe-y2-detail">—</div>
+          </div>
+        </div>
+        <div class="vr-eps-row">EPS：Y1 <span id="r-eps-y1">—</span> ／ Y2 <span id="r-eps-y2">—</span></div>
+      </div>
+      <div class="vr-card">
+        <div class="vr-badge badge-peg">PEG 法</div>
+        <div class="vr-method">成長調整法</div>
+        <div class="vr-cols">
+          <div class="vr-yr">
+            <div class="vr-yr-label">Y1 目標價</div>
+            <div class="vr-price" id="r-peg-y1">—</div>
+            <div class="vr-detail" id="r-peg-y1-detail">—</div>
+          </div>
+          <div class="vr-yr">
+            <div class="vr-yr-label">Y2 目標價</div>
+            <div class="vr-price" id="r-peg-y2">—</div>
+            <div class="vr-detail" id="r-peg-y2-detail">—</div>
+          </div>
+        </div>
+        <div class="vr-eps-row">EPS 成長率：Y1 <span id="r-epsgr-y1">—</span> ／ Y2 <span id="r-epsgr-y2">—</span></div>
+      </div>
+      <div class="vr-card">
+        <div class="vr-badge badge-ev">EV/EBITDA</div>
+        <div class="vr-method">企業價值法</div>
+        <div class="vr-cols">
+          <div class="vr-yr">
+            <div class="vr-yr-label">Y1 目標價</div>
+            <div class="vr-price" id="r-ev-y1">—</div>
+            <div class="vr-detail" id="r-ev-y1-detail">—</div>
+          </div>
+          <div class="vr-yr">
+            <div class="vr-yr-label">Y2 目標價</div>
+            <div class="vr-price" id="r-ev-y2">—</div>
+            <div class="vr-detail" id="r-ev-y2-detail">—</div>
+          </div>
+        </div>
+        <div class="vr-eps-row">EBITDA：Y1 <span id="r-ebitda-y1">—</span> ／ Y2 <span id="r-ebitda-y2">—</span></div>
+      </div>
+      <div class="vr-card">
+        <div class="vr-badge badge-div">殖利率法</div>
+        <div class="vr-method">現金殖利率法</div>
+        <div class="vr-cols">
+          <div class="vr-yr">
+            <div class="vr-yr-label">Y1 殖利率目標</div>
+            <div class="vr-price" id="r-div-y1">—</div>
+            <div class="vr-detail" id="r-div-y1-detail">—</div>
+          </div>
+          <div class="vr-yr">
+            <div class="vr-yr-label">Y2 殖利率目標</div>
+            <div class="vr-price" id="r-div-y2">—</div>
+            <div class="vr-detail" id="r-div-y2-detail">—</div>
+          </div>
+        </div>
+        <div class="vr-eps-row">DPS 輸入值：<span id="r-dps-show">—</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 國巨法人對照（只在國巨預設時顯示） -->
+  <div class="est-compare" id="yageoCompare">
     <div class="ec-title">📊 法人預估對照（國巨 2327，2026E）</div>
     <div class="ec-grid">
-      <div class="ec-row ec-header"><span>項目</span><span>Citi（2026/05/13）</span><span>HSBC（2026/05/17）</span><span>你的推算</span></div>
+      <div class="ec-row ec-header"><span>項目</span><span>Citi（2026/05/13）</span><span>HSBC（2026/05/17）</span><span>你的 Y1 推算</span></div>
       <div class="ec-row"><span>營收（億元）</span><span>1,710</span><span>1,795</span><span id="ec-rev">—</span></div>
       <div class="ec-row"><span>毛利率</span><span>38.8%</span><span>39.8%</span><span id="ec-gm">—</span></div>
       <div class="ec-row"><span>營業利益（億元）</span><span>448</span><span>477</span><span id="ec-op">—</span></div>
@@ -1084,91 +1275,7 @@
     </div>
   </div>
 
-  <!-- 互動模型 -->
-  <div class="model-card">
-    <div class="model-card-title">🎛️ 調整假設，即時計算</div>
-    <div class="model-inputs">
-
-      <div class="mi-group">
-        <div class="mi-label">基期營收（2025 實際，億元）<span class="mi-fixed">固定值 = 1,329</span></div>
-        <div class="mi-val-display">NT$ <span id="disp-base">1,329</span> 億元</div>
-      </div>
-
-      <div class="mi-group">
-        <label class="mi-label">① 營收成長率 <span class="mi-range">（Citi: 29% ／ HSBC: 35%）</span></label>
-        <div class="mi-row">
-          <input type="range" id="sl-rev" min="-10" max="60" value="29" step="1">
-          <span class="mi-val" id="v-rev">29%</span>
-        </div>
-      </div>
-
-      <div class="mi-group">
-        <label class="mi-label">② 毛利率 <span class="mi-range">（Citi: 38.8% ／ HSBC: 39.8%）</span></label>
-        <div class="mi-row">
-          <input type="range" id="sl-gm" min="30" max="48" value="38.8" step="0.5">
-          <span class="mi-val" id="v-gm">38.8%</span>
-        </div>
-      </div>
-
-      <div class="mi-group">
-        <label class="mi-label">③ 營業費用率 <span class="mi-range">（Citi: 12.6% ／ 2025實際: 13.8%）</span></label>
-        <div class="mi-row">
-          <input type="range" id="sl-opex" min="10" max="18" value="12.6" step="0.1">
-          <span class="mi-val" id="v-opex">12.6%</span>
-        </div>
-      </div>
-
-      <div class="mi-group">
-        <label class="mi-label">④ 業外淨收入（億元）<span class="mi-range">（主要為利息收入，2025實際: 15.7）</span></label>
-        <div class="mi-row">
-          <input type="range" id="sl-nonop" min="0" max="30" value="15.7" step="0.5">
-          <span class="mi-val" id="v-nonop">15.7 億</span>
-        </div>
-      </div>
-
-      <div class="mi-group">
-        <label class="mi-label">⑤ 稅率 <span class="mi-range">（歷史約 22–24%）</span></label>
-        <div class="mi-row">
-          <input type="range" id="sl-tax" min="18" max="28" value="22.7" step="0.5">
-          <span class="mi-val" id="v-tax">22.7%</span>
-        </div>
-      </div>
-
-      <div class="mi-group">
-        <label class="mi-label">⑥ 目標本益比（PE）<span class="mi-range">（Citi: 23x ／ HSBC: 25x）</span></label>
-        <div class="mi-row">
-          <input type="range" id="sl-pe" min="10" max="40" value="23" step="1">
-          <span class="mi-val" id="v-pe">23x</span>
-        </div>
-      </div>
-
-    </div>
-
-    <!-- 輸出結果 -->
-    <div class="model-output" id="modelOutput">
-      <div class="mo-row">
-        <div class="mo-item"><div class="mo-label">2026E 營收</div><div class="mo-val" id="out-rev">—</div></div>
-        <div class="mo-item"><div class="mo-label">毛利</div><div class="mo-val" id="out-gp">—</div></div>
-        <div class="mo-item"><div class="mo-label">營業利益</div><div class="mo-val" id="out-op">—</div></div>
-        <div class="mo-item"><div class="mo-label">稅前淨利</div><div class="mo-val" id="out-pbt">—</div></div>
-        <div class="mo-item"><div class="mo-label">稅後淨利</div><div class="mo-val" id="out-np">—</div></div>
-      </div>
-      <div class="mo-highlight-row">
-        <div class="mo-highlight">
-          <div class="mo-hl-label">EPS（元）</div>
-          <div class="mo-hl-val" id="out-eps">—</div>
-          <div class="mo-hl-sub">÷ 2,053 百萬股</div>
-        </div>
-        <div class="mo-highlight mo-hl-tp">
-          <div class="mo-hl-label">目標股價（元）</div>
-          <div class="mo-hl-val" id="out-tp">—</div>
-          <div class="mo-hl-sub">EPS × PE 倍數</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="model-disclaimer">※ 此模型為教學用途，數字均為推算值，不構成投資建議。基期數據來自國巨 2025 年年報；法人預估來自 Citi（2026/05/13）及 HSBC（2026/05/17）報告。</div>
-  </div>
+  <div class="model-disclaimer">※ 此模型為教學用途，數字均為推算值，不構成投資建議。國巨基期數據來自 2025 年年報；Citi（2026/05/13）與 HSBC（2026/05/17）法人預估僅供參考。EV/EBITDA 淨負債為估算值，請依最新財報調整。</div>
 </section>
 
 <!-- ===== FOOTER ===== -->

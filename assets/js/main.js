@@ -247,76 +247,175 @@ function buildScoresTable() {
 
 buildScoresTable();
 
-/* ===== FINANCIAL MODEL ===== */
+/* ===== FINANCIAL MODEL (GENERIC - 4 METHODS) ===== */
 (function(){
-  const BASE = 1329; // 2025 actual revenue (億元)
-  const SHARES = 2053; // million shares outstanding
-
-  const ids = {
-    rev:'sl-rev', gm:'sl-gm', opex:'sl-opex',
-    nonop:'sl-nonop', tax:'sl-tax', pe:'sl-pe'
+  const PRESETS = {
+    yageo: {
+      name:'國巨', ticker:'2327',
+      baserev:1329, shares:2053, nonop:15.7, tax:22.7,
+      preveps:11.51, dps:5, da:3.5, netdebt:-50,
+      y1:{ rev:29, gm:38.8, opex:12.6, pe:23, ev:15, yield:3, peg:1.2 },
+      y2:{ rev:20, gm:40,   opex:12,   pe:23, ev:15, yield:3, peg:1.2 }
+    },
+    blank: {
+      name:'', ticker:'',
+      baserev:0, shares:0, nonop:0, tax:20,
+      preveps:0, dps:0, da:3, netdebt:0,
+      y1:{ rev:10, gm:35, opex:15, pe:20, ev:12, yield:3, peg:1.0 },
+      y2:{ rev:10, gm:35, opex:15, pe:20, ev:12, yield:3, peg:1.0 }
+    }
   };
-  const displays = {
-    rev:'v-rev', gm:'v-gm', opex:'v-opex',
-    nonop:'v-nonop', tax:'v-tax', pe:'v-pe'
-  };
 
-  function getVal(id){ return parseFloat(document.getElementById(id).value); }
+  const BASE_IDS = ['m-name','m-ticker','m-baserev','m-shares','m-nonop','m-tax','m-preveps','m-dps','m-da','m-netdebt'];
+  const SL_KEYS  = ['rev','gm','opex','pe','ev','yield','peg'];
+  const SL_SFX   = { rev:'%', gm:'%', opex:'%', pe:'x', ev:'x', yield:'%', peg:'' };
 
-  function calc(){
-    const revGrowth = getVal(ids.rev) / 100;
-    const gm        = getVal(ids.gm)   / 100;
-    const opexR     = getVal(ids.opex) / 100;
-    const nonop     = getVal(ids.nonop);
-    const taxR      = getVal(ids.tax)  / 100;
-    const pe        = getVal(ids.pe);
+  const getNum = id => parseFloat(document.getElementById(id).value) || 0;
+  const getStr = id => (document.getElementById(id).value || '').trim();
+  const set    = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = v; };
+  const setVal = (id, v) => { const el = document.getElementById(id); if (el) el.value = v; };
+  const slId   = (yr, k) => `${yr}-${k}`;
+  const slVal  = (yr, k) => parseFloat(document.getElementById(slId(yr,k)).value);
 
-    const rev  = BASE * (1 + revGrowth);
-    const gp   = rev * gm;
-    const op   = gp - rev * opexR;
-    const pbt  = op + nonop;
-    const np   = pbt * (1 - taxR);
-    const eps  = (np * 100) / SHARES; // 億元 → 元 (×1億/百萬股 = ×100)
-    const tp   = eps * pe;
-
-    const fmt  = v => (Math.round(v)).toLocaleString();
-    const fmt1 = v => v.toFixed(1);
-
-    document.getElementById('out-rev').textContent = fmt(rev) + ' 億';
-    document.getElementById('out-gp' ).textContent = fmt(gp)  + ' 億';
-    document.getElementById('out-op' ).textContent = fmt(op)  + ' 億';
-    document.getElementById('out-pbt').textContent = fmt(pbt) + ' 億';
-    document.getElementById('out-np' ).textContent = fmt(np)  + ' 億';
-    document.getElementById('out-eps').textContent = 'NT$' + fmt1(eps);
-    document.getElementById('out-tp' ).textContent = 'NT$' + fmt(tp);
-
-    // sync comparison column
-    document.getElementById('ec-rev').textContent = fmt(rev) + ' 億';
-    document.getElementById('ec-gm' ).textContent = (getVal(ids.gm)).toFixed(1) + '%';
-    document.getElementById('ec-op' ).textContent = fmt(op) + ' 億';
-    document.getElementById('ec-np' ).textContent = fmt(np) + ' 億';
-    document.getElementById('ec-eps').textContent = 'NT$' + fmt1(eps);
-    document.getElementById('ec-tp' ).textContent = 'NT$' + fmt(tp) + ' (' + pe + 'x)';
-  }
-
-  function bindSlider(slId, dispId, suffix){
-    const sl = document.getElementById(slId);
-    const dp = document.getElementById(dispId);
-    if(!sl) return;
-    sl.addEventListener('input', () => {
-      dp.textContent = sl.value + suffix;
-      calc();
+  function applyPreset(key) {
+    const p = PRESETS[key];
+    if (!p) return;
+    setVal('m-name', p.name); setVal('m-ticker', p.ticker);
+    setVal('m-baserev', p.baserev); setVal('m-shares', p.shares);
+    setVal('m-nonop', p.nonop); setVal('m-tax', p.tax);
+    setVal('m-preveps', p.preveps); setVal('m-dps', p.dps);
+    setVal('m-da', p.da); setVal('m-netdebt', p.netdebt);
+    ['y1','y2'].forEach(yr => {
+      SL_KEYS.forEach(k => {
+        const sl = document.getElementById(slId(yr,k));
+        const dp = document.getElementById(slId(yr,k) + '-v');
+        if (!sl) return;
+        sl.value = p[yr][k];
+        if (dp) dp.textContent = p[yr][k] + SL_SFX[k];
+      });
     });
+    const cmp = document.getElementById('yageoCompare');
+    if (cmp) cmp.style.display = key === 'yageo' ? '' : 'none';
+    calc();
   }
 
-  bindSlider('sl-rev',   'v-rev',   '%');
-  bindSlider('sl-gm',    'v-gm',    '%');
-  bindSlider('sl-opex',  'v-opex',  '%');
-  bindSlider('sl-nonop', 'v-nonop', ' 億');
-  bindSlider('sl-tax',   'v-tax',   '%');
-  bindSlider('sl-pe',    'v-pe',    'x');
+  function calcYear(baserev, shares, nonop, taxR, preveps, dps, da_pct, netdebt, p) {
+    const rev   = baserev * (1 + p.rev / 100);
+    const gp    = rev * (p.gm / 100);
+    const op    = gp - rev * (p.opex / 100);
+    const np    = (op + nonop) * (1 - taxR / 100);
+    const eps   = shares > 0 ? (np * 100) / shares : 0; // 億元→元
 
-  calc(); // initial render
+    // PE法
+    const tp_pe = eps * p.pe;
+
+    // PEG法
+    const epsgr  = preveps > 0 ? ((eps - preveps) / Math.abs(preveps)) * 100 : 0;
+    const fairpe = epsgr * p.peg;
+    const tp_peg = eps * fairpe;
+
+    // EV/EBITDA法
+    const da      = rev * (da_pct / 100);
+    const ebitda  = op + da;
+    const tp_ev   = shares > 0 ? ((ebitda * p.ev - netdebt) * 100) / shares : 0;
+
+    // 殖利率法
+    const tp_div  = p.yield > 0 ? dps / (p.yield / 100) : 0;
+
+    return { rev, gp, op, np, eps, tp_pe, epsgr, fairpe, tp_peg, ebitda, tp_ev, tp_div };
+  }
+
+  const fmtP  = v => !isFinite(v) ? '—' : 'NT$' + Math.round(v).toLocaleString();
+  const fmtBn = v => (!isFinite(v)) ? '—' : Math.round(v).toLocaleString() + ' 億';
+  const fmt1  = v => (!isFinite(v)) ? '—' : v.toFixed(1);
+  const fmt2  = v => (!isFinite(v)) ? '—' : v.toFixed(2);
+  const fmtPt = (v, sfx) => (!isFinite(v)) ? '—' : fmt1(v) + sfx;
+
+  function calc() {
+    const baserev = getNum('m-baserev'), shares = getNum('m-shares');
+    const nonop   = getNum('m-nonop'),   tax    = getNum('m-tax');
+    const preveps = getNum('m-preveps'), dps    = getNum('m-dps');
+    const da_pct  = getNum('m-da'),      netdebt = getNum('m-netdebt');
+    const name    = getStr('m-name') || '—';
+    set('vr-name', name);
+
+    const p1 = { rev:slVal('y1','rev'), gm:slVal('y1','gm'), opex:slVal('y1','opex'),
+                 pe:slVal('y1','pe'),   ev:slVal('y1','ev'),  yield:slVal('y1','yield'), peg:slVal('y1','peg') };
+    const p2 = { rev:slVal('y2','rev'), gm:slVal('y2','gm'), opex:slVal('y2','opex'),
+                 pe:slVal('y2','pe'),   ev:slVal('y2','ev'),  yield:slVal('y2','yield'), peg:slVal('y2','peg') };
+
+    const y1 = calcYear(baserev, shares, nonop, tax, preveps, dps, da_pct, netdebt, p1);
+    const y2 = calcYear(y1.rev,  shares, nonop, tax, y1.eps,  dps, da_pct, netdebt, p2);
+
+    // PE results
+    set('r-pe-y1',        fmtP(y1.tp_pe));
+    set('r-pe-y1-detail', `EPS ${fmt2(y1.eps)}元 × ${p1.pe}x`);
+    set('r-pe-y2',        fmtP(y2.tp_pe));
+    set('r-pe-y2-detail', `EPS ${fmt2(y2.eps)}元 × ${p2.pe}x`);
+    set('r-eps-y1', fmt2(y1.eps) + '元');
+    set('r-eps-y2', fmt2(y2.eps) + '元');
+
+    // PEG results
+    set('r-peg-y1',        fmtP(y1.tp_peg));
+    set('r-peg-y1-detail', `公允PE ${fmt1(y1.fairpe)}x（成長${fmt1(y1.epsgr)}%×${p1.peg}）`);
+    set('r-peg-y2',        fmtP(y2.tp_peg));
+    set('r-peg-y2-detail', `公允PE ${fmt1(y2.fairpe)}x（成長${fmt1(y2.epsgr)}%×${p2.peg}）`);
+    set('r-epsgr-y1', fmtPt(y1.epsgr, '%'));
+    set('r-epsgr-y2', fmtPt(y2.epsgr, '%'));
+
+    // EV/EBITDA results
+    set('r-ev-y1',        fmtP(y1.tp_ev));
+    set('r-ev-y1-detail', `EBITDA ${fmtBn(y1.ebitda)} × ${p1.ev}x`);
+    set('r-ev-y2',        fmtP(y2.tp_ev));
+    set('r-ev-y2-detail', `EBITDA ${fmtBn(y2.ebitda)} × ${p2.ev}x`);
+    set('r-ebitda-y1', fmtBn(y1.ebitda));
+    set('r-ebitda-y2', fmtBn(y2.ebitda));
+
+    // 殖利率法
+    set('r-div-y1',        fmtP(y1.tp_div));
+    set('r-div-y1-detail', `DPS ${dps}元 ÷ ${fmt1(p1.yield)}%`);
+    set('r-div-y2',        fmtP(y2.tp_div));
+    set('r-div-y2-detail', `DPS ${dps}元 ÷ ${fmt1(p2.yield)}%`);
+    set('r-dps-show', dps + ' 元');
+
+    // 國巨對照表 Y1
+    set('ec-rev', fmtBn(y1.rev));
+    set('ec-gm',  fmtPt(p1.gm, '%'));
+    set('ec-op',  fmtBn(y1.op));
+    set('ec-np',  fmtBn(y1.np));
+    set('ec-eps', fmt2(y1.eps) + '元');
+    set('ec-tp',  fmtP(y1.tp_pe) + ' (' + p1.pe + 'x)');
+  }
+
+  // bind sliders
+  ['y1','y2'].forEach(yr => {
+    SL_KEYS.forEach(k => {
+      const sl = document.getElementById(slId(yr,k));
+      const dp = document.getElementById(slId(yr,k) + '-v');
+      if (!sl) return;
+      sl.addEventListener('input', () => {
+        if (dp) dp.textContent = sl.value + SL_SFX[k];
+        calc();
+      });
+    });
+  });
+
+  // bind base inputs
+  BASE_IDS.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.addEventListener('input', calc);
+  });
+
+  // bind preset buttons
+  document.querySelectorAll('.preset-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      applyPreset(btn.dataset.preset);
+    });
+  });
+
+  applyPreset('yageo');
 })();
 
 /* ===== CAPACITOR TYPE MODAL ===== */
