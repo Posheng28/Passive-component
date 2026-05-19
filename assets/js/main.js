@@ -3,8 +3,8 @@
 /* ===== DATA ===== */
 const COMPANIES = [
   { name:'國巨', ticker:'2327', group:'platform', groupLabel:'綜合平台',
-    products:'MLCC、鉭電容、晶片電阻、磁性元件、感測器',
-    catalyst:'2026/4 合併營收創單月新高；併購KEMET後鉭電容全球產能市占約40%+（最大供應商）',
+    products:'MLCC、鉭電容、晶片電阻、薄膜電阻、電流感測電阻、功率電感、共模電感、磁性元件、感測器',
+    catalyst:'2026/4 合併營收創單月新高；併購KEMET後鉭電容全球產能市占約40%+（最大供應商）；併購Pulse Electronics取得功率電感與共模電感產線',
     ai:5, car:4, price:5, scarce:5, platform:5, color:'#5b6ef5' },
   { name:'華新科', ticker:'2492', group:'platform', groupLabel:'綜合平台',
     products:'陶瓷電容、晶片電阻、電感、RF濾波器、天線',
