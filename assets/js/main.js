@@ -34,7 +34,7 @@ const COMPANIES = [
     products:'鋁質電解電容、固態/高值化電容',
     catalyst:'雲端/AI伺服器需求強；中國、泰國擴產',
     ai:4, car:3, price:3, scarce:3, platform:2, color:'#1a6ba0' },
-  { name:'凱美', ticker:'2486', group:'cap', groupLabel:'電容',
+  { name:'凱美', ticker:'2375', group:'cap', groupLabel:'電容',
     products:'鋁質電解電容、固態/Hybrid鋁電、風扇',
     catalyst:'三大產品線已有AI客戶導入',
     ai:3, car:2, price:3, scarce:2, platform:2, color:'#1a5276' },
@@ -102,15 +102,15 @@ const COMPANIES = [
     products:'PPTC、過電壓保護、複合式保護元件、SiC/GaN功率半導體',
     catalyst:'佈局AI/EV高溫系列保護元件與SiC/GaN',
     ai:3, car:4, price:3, scarce:3, platform:2, color:'#b71c1c' },
-  { name:'九豪', ticker:'9101', group:'upstream', groupLabel:'上游材料',
+  { name:'九豪', ticker:'6127', group:'upstream', groupLabel:'上游材料',
     products:'氧化物/非氧化物陶瓷基板、電阻基板、氮化鋁基板',
     catalyst:'AlN基板切入AI/光通訊；非電阻基板比重提高',
     ai:3, car:4, price:3, scarce:4, platform:1, color:'#27ae60' },
-  { name:'勤凱', ticker:'3272', group:'upstream', groupLabel:'上游材料',
+  { name:'勤凱', ticker:'4760', group:'upstream', groupLabel:'上游材料',
     products:'電阻端電極銀漿、太陽能背銀膠、先進封裝/散熱材料',
     catalyst:'銀價上漲調漲銀膏；切入先進封裝與AI材料',
     ai:3, car:3, price:5, scarce:4, platform:1, color:'#1e8449' },
-  { name:'立敦', ticker:'5344', group:'upstream', groupLabel:'上游材料',
+  { name:'立敦', ticker:'6175', group:'upstream', groupLabel:'上游材料',
     products:'化成鋁箔、電蝕箔、導針、電解液',
     catalyst:'鋁電景氣回升與高值化產品放量時，上游具槓桿',
     ai:2, car:3, price:3, scarce:4, platform:1, color:'#145a32' },
@@ -246,6 +246,78 @@ function buildScoresTable() {
 }
 
 buildScoresTable();
+
+/* ===== FINANCIAL MODEL ===== */
+(function(){
+  const BASE = 1329; // 2025 actual revenue (億元)
+  const SHARES = 2053; // million shares outstanding
+
+  const ids = {
+    rev:'sl-rev', gm:'sl-gm', opex:'sl-opex',
+    nonop:'sl-nonop', tax:'sl-tax', pe:'sl-pe'
+  };
+  const displays = {
+    rev:'v-rev', gm:'v-gm', opex:'v-opex',
+    nonop:'v-nonop', tax:'v-tax', pe:'v-pe'
+  };
+
+  function getVal(id){ return parseFloat(document.getElementById(id).value); }
+
+  function calc(){
+    const revGrowth = getVal(ids.rev) / 100;
+    const gm        = getVal(ids.gm)   / 100;
+    const opexR     = getVal(ids.opex) / 100;
+    const nonop     = getVal(ids.nonop);
+    const taxR      = getVal(ids.tax)  / 100;
+    const pe        = getVal(ids.pe);
+
+    const rev  = BASE * (1 + revGrowth);
+    const gp   = rev * gm;
+    const op   = gp - rev * opexR;
+    const pbt  = op + nonop;
+    const np   = pbt * (1 - taxR);
+    const eps  = (np * 100) / SHARES; // 億元 → 元 (×1億/百萬股 = ×100)
+    const tp   = eps * pe;
+
+    const fmt  = v => (Math.round(v)).toLocaleString();
+    const fmt1 = v => v.toFixed(1);
+
+    document.getElementById('out-rev').textContent = fmt(rev) + ' 億';
+    document.getElementById('out-gp' ).textContent = fmt(gp)  + ' 億';
+    document.getElementById('out-op' ).textContent = fmt(op)  + ' 億';
+    document.getElementById('out-pbt').textContent = fmt(pbt) + ' 億';
+    document.getElementById('out-np' ).textContent = fmt(np)  + ' 億';
+    document.getElementById('out-eps').textContent = 'NT$' + fmt1(eps);
+    document.getElementById('out-tp' ).textContent = 'NT$' + fmt(tp);
+
+    // sync comparison column
+    document.getElementById('ec-rev').textContent = fmt(rev) + ' 億';
+    document.getElementById('ec-gm' ).textContent = (getVal(ids.gm)).toFixed(1) + '%';
+    document.getElementById('ec-op' ).textContent = fmt(op) + ' 億';
+    document.getElementById('ec-np' ).textContent = fmt(np) + ' 億';
+    document.getElementById('ec-eps').textContent = 'NT$' + fmt1(eps);
+    document.getElementById('ec-tp' ).textContent = 'NT$' + fmt(tp) + ' (' + pe + 'x)';
+  }
+
+  function bindSlider(slId, dispId, suffix){
+    const sl = document.getElementById(slId);
+    const dp = document.getElementById(dispId);
+    if(!sl) return;
+    sl.addEventListener('input', () => {
+      dp.textContent = sl.value + suffix;
+      calc();
+    });
+  }
+
+  bindSlider('sl-rev',   'v-rev',   '%');
+  bindSlider('sl-gm',    'v-gm',    '%');
+  bindSlider('sl-opex',  'v-opex',  '%');
+  bindSlider('sl-nonop', 'v-nonop', ' 億');
+  bindSlider('sl-tax',   'v-tax',   '%');
+  bindSlider('sl-pe',    'v-pe',    'x');
+
+  calc(); // initial render
+})();
 
 /* ===== CAPACITOR TYPE MODAL ===== */
 const CAP_TYPE_MAP = {
