@@ -35,7 +35,7 @@ const COMPANIES = [
     catalyst:'雲端/AI伺服器需求強；中國、泰國擴產',
     ai:4, car:3, price:3, scarce:3, platform:2, color:'#1a6ba0' },
   { name:'凱美', ticker:'2375', group:'cap', groupLabel:'電容',
-    products:'鋁質電解電容、固態/Hybrid鋁電、風扇',
+    products:'鋁質電解電容、固態/Hybrid鋁電、晶片電阻、電流感測電阻、風扇',
     catalyst:'三大產品線已有AI客戶導入',
     ai:3, car:2, price:3, scarce:2, platform:2, color:'#1a5276' },
   { name:'鈺邦', ticker:'6449', group:'cap', groupLabel:'電容',
