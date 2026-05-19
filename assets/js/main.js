@@ -475,7 +475,7 @@ const RES_TYPE_MAP = {
   metal:  { label:'③ 金屬膜電阻 相關廠商',      fn: c => /金屬膜/.test(c.products) },
   oxide:  { label:'④ 金屬氧化膜電阻 相關廠商',  fn: c => /金屬氧化/.test(c.products) },
   wire:   { label:'⑤ 繞線電阻 相關廠商',        fn: c => /繞線/.test(c.products) },
-  shunt:  { label:'⑥ 電流感測電阻 相關廠商',    fn: c => /電流感測電阻|Metal Strip/.test(c.products) },
+  shunt:  { label:'⑥ 分流／電流感測／PPTC 相關廠商', fn: c => /電流感測電阻|Metal Strip|PPTC/.test(c.products) },
 };
 
 document.querySelectorAll('.rtt-row[data-restype]').forEach(row => {
