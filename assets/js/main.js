@@ -72,7 +72,7 @@ const COMPANIES = [
     ai:3, car:4, price:2, scarce:2, platform:1, color:'#3d1a78' },
   { name:'晶技', ticker:'3042', groups:['freq'], groupLabel:'頻率/RF',
     products:'石英晶體、XO、TCXO、OCXO、VCXO、32kHz振盪器、MEMS振盪器',
-    catalyst:'台灣第一大、全球前三大石英頻率元件廠；400G/800G光收發模組為最大AI成長動能（1.6T進驗證）；AI營收佔比10%→16%；低軌衛星(Starlink/Amazon LEO)帶動網通6%→9%；4月漲價5-10%；富邦目標價175元（買進）；2026F EPS 6.72元、2027F 9.00元；毛利率回升至35%+',
+    catalyst:'台灣第一大、全球前三大石英頻率元件廠；400G/800G光收發模組為最大AI成長動能（1.6T進驗證）；AI營收佔比10%→16%；低軌衛星(Starlink/Amazon LEO)帶動網通6%→9%；4月漲價5-10%；毛利率從33%回升至35%+',
     ai:4, car:5, price:4, scarce:3, platform:1, color:'#00acc1' },
   { name:'台嘉碩', ticker:'3264', groups:['freq'], groupLabel:'頻率/RF',
     products:'SAW、BAW、石英振盪晶體、振盪器、天線',
